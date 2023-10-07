@@ -19,12 +19,13 @@ public class Burger : MonoBehaviour
 
     void Update()
     {
-        if (update)
+        while (update)
         {
             CreateRandomBurger(burgerSize);
-            RenderBurger();
+            CreateRandomBurger(burgerSize); RenderBurger();
+
             update = false;
-        } 
+        }
     }
 
     private void RenderBurger() 
@@ -80,4 +81,16 @@ public class Burger : MonoBehaviour
         }
         burgerParts.Add(instance.burgerPartPrefabs[0]);
     }
+
+    //Funny cheese count
+    //int count;
+    //private void CheckCheese()
+    //{
+    //    count++;
+    //    foreach (var burgerPart in burgerParts)
+    //    {
+    //        if (burgerPart.name != "Cheese" && burgerPart.name != "Top Bun" && burgerPart.name != "Bottom Bun") return;
+    //    }
+    //    Debug.Log("Count: " + count);
+    //}
 }
