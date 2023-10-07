@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static BurgerPrefabs;
 
 public class Burger : MonoBehaviour
 {
-    public BurgerPrefabs.BurgerPart[] burgerParts;
+    public List<BurgerPart> burgerParts;
 
     private void Start()
     {
-        CreateDebugBurger();
-        RenderBurger();
     }
 
     void Update()
     {
-        
+        CreateDebugBurger();
+        RenderBurger();
     }
 
     private void RenderBurger() 
@@ -27,18 +27,20 @@ public class Burger : MonoBehaviour
         }
 
         float nextPartZOffset = 0f;
-        foreach (BurgerPrefabs.BurgerPart burgerPart in burgerParts)
+        foreach (BurgerPart burgerPart in burgerParts)
         {
             GameObject part;
             if (burgerPart.name == "Debug Plane")
             {
                 part = GameObject.CreatePrimitive(PrimitiveType.Quad);
                 part.transform.parent = transform;
+                part.transform.rotation = Quaternion.Euler(90f,0f,0f);
                 part.transform.localScale = Vector3.one * 3f;
             }
             else
             {
                 part = Instantiate(burgerPart.model, transform);
+                part.transform.localScale = burgerPart.scale;
             }
             part.name = burgerPart.name;
             part.transform.position = burgerPart.offset + Vector3.up * nextPartZOffset;
@@ -53,12 +55,13 @@ public class Burger : MonoBehaviour
 
     private void CreateDebugBurger() //Include all burgerPartPrefabs
     {
-        BurgerPrefabs.BurgerPart debugPlane = new BurgerPrefabs.BurgerPart();
+        burgerParts.Clear();
+        BurgerPart debugPlane = new BurgerPart();
         debugPlane.name = "Debug Plane";
-        foreach (BurgerPrefabs.BurgerPart burgerPart in BurgerPrefabs.instance.burgerPartPrefabs)
+        foreach (BurgerPart burgerPart in instance.burgerPartPrefabs)
         {
-            burgerParts.Append(burgerPart);
-            burgerParts.Append(debugPlane);
+            burgerParts.Add(burgerPart);
+            burgerParts.Add(debugPlane);
         }
     }
 }

@@ -11,14 +11,24 @@ public class BurgerPrefabs : MonoBehaviour
     [Serializable]
     public class BurgerPart
     {
-        public string name;
-        public GameObject model;
+        public string name = "";
+        public GameObject model = null;
+        public float modelHeight = 0f;
         public Vector3 offset = Vector3.zero;
-        public float modelHeight;
+        public Vector3 scale = Vector3.one;
+
+        public BurgerPart(string name = default, GameObject model = default, float modelHeight = default, Vector3 offset = default, Vector3 scale = default)
+        {
+            this.name = name;
+            this.model = model;
+            this.modelHeight = modelHeight;
+            this.offset = offset;
+            this.scale = scale;
+        }
     }
 
-    public BurgerPart[] burgerPartPrefabs { get; private set; } //0 is top bun, 1 is bottom bun
-    [SerializeField] private BurgerPart[] inspectorAssignedBurgerPartPrefabs;
+    public List<BurgerPart> burgerPartPrefabs = new List<BurgerPart>(); //0 is top bun, 1 is bottom bun
+    [SerializeField] private List<BurgerPart> inspectorAssignedBurgerPartPrefabs;
 
     private void Awake()
     {
@@ -31,13 +41,8 @@ public class BurgerPrefabs : MonoBehaviour
             instance = this;
         }
 
-        burgerPartPrefabs = new BurgerPart[2];
-        burgerPartPrefabs[0].name = "Top Bun";
-        burgerPartPrefabs[0].model = (GameObject)Resources.Load("Prefabs/Buns/topbun");
-        burgerPartPrefabs[0].modelHeight = 0f;
-        burgerPartPrefabs[1].name = "Bottom Bun";
-        burgerPartPrefabs[1].model = (GameObject)Resources.Load("Prefabs/Buns/bottombun");
-        burgerPartPrefabs[1].modelHeight = 5f;
-        burgerPartPrefabs.Concat(inspectorAssignedBurgerPartPrefabs);
+        burgerPartPrefabs.Add(new BurgerPart("Top Bun", (GameObject)Resources.Load("Prefabs/Buns/topbun")));
+        burgerPartPrefabs.Add(new BurgerPart("Bottom Bun", (GameObject)Resources.Load("Prefabs/Buns/bottombun"), 5f));
+        burgerPartPrefabs.AddRange(inspectorAssignedBurgerPartPrefabs);
     }
 }
