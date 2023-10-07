@@ -22,13 +22,14 @@ public class Burger : MonoBehaviour
         if (update)
         {
             CreateRandomBurger(burgerSize);
-            RenderBurger();
+            RegenerateBurger();
 
             update = false;
         }
+        ReRenderBurger();
     }
 
-    public void RenderBurger() 
+    public void RegenerateBurger() 
     {
         foreach (Transform child in transform) //Clear Burger
         {
@@ -62,11 +63,22 @@ public class Burger : MonoBehaviour
             }
             part.name = burgerPart.name;
             part.transform.position = burgerPart.offset + Vector3.up * nextPartZOffset;
+            burgerPart.physical = part;
             nextPartZOffset += burgerPart.modelHeight;
 
             index++;
         }
 
+    }
+
+    public void ReRenderBurger()
+    {
+        float nextPartZOffset = 0f;
+        foreach (BurgerPart burgerPart in burgerParts)
+        {
+            burgerPart.physical.transform.position = burgerPart.offset + Vector3.up * nextPartZOffset;
+            nextPartZOffset += burgerPart.modelHeight;
+        }
     }
 
     private void CreateRandomBurger(int size)
