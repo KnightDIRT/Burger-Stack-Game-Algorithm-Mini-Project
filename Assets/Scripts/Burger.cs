@@ -40,7 +40,7 @@ public class Burger : MonoBehaviour
             else
             {
                 part = Instantiate(burgerPart.model, transform);
-                part.transform.localScale = burgerPart.scale;
+                //part.transform.localScale = burgerPart.scale;
             }
             part.name = burgerPart.name;
             part.transform.position = burgerPart.offset + Vector3.up * nextPartZOffset;
@@ -58,10 +58,11 @@ public class Burger : MonoBehaviour
         burgerParts.Clear();
         BurgerPart debugPlane = new BurgerPart();
         debugPlane.name = "Debug Plane";
-        foreach (BurgerPart burgerPart in instance.burgerPartPrefabs)
+        foreach (BurgerPart burgerPart in instance.burgerPartPrefabs.Skip(1))
         {
             burgerParts.Add(burgerPart);
             burgerParts.Add(debugPlane);
         }
+        burgerParts.Add(instance.burgerPartPrefabs[0]);
     }
 }

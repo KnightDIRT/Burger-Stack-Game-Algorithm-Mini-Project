@@ -378,6 +378,57 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &575301269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 575301271}
+  - component: {fileID: 575301270}
+  m_Layer: 0
+  m_Name: Burger Prefabs Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &575301270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575301269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33a0918010584b449a9c877a81bcd229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  burgerPartPrefabs: []
+  inspectorAssignedBurgerPartPrefabs:
+  - name: Cheese
+    model: {fileID: 919132149155446097, guid: 20e50eb0323cb254c808df77bfae94ae, type: 3}
+    modelHeight: 0.36
+    offset: {x: 0, y: 0.3, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+--- !u!4 &575301271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575301269}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.297076, y: -1.5769564, z: -1.2809335}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &623924650
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,11 +458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5651448ced98346bc36188ff4ce624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inspectorAssignedBurgerPartPrefabs:
-  - name: Steakl1
-    model: {fileID: 919132149155446097, guid: 31dabdc55e3c84f47a19fd2411be8a81, type: 3}
-    offset: {x: 0, y: 0, z: 0}
-    modelHeight: 0
   burgerParts: []
 --- !u!4 &623924652
 Transform:
@@ -421,7 +467,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 623924650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.53761864, y: -0.05373192, z: 0.60100365}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
