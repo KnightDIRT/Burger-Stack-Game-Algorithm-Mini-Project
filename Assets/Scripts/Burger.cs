@@ -2,14 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
-using static BurgerPrefabs;
+using static BurgerManager;
 
 public class Burger : MonoBehaviour
 {
     [SerializeField] bool update;
     [SerializeField] int burgerSize;
-    
     
     public List<BurgerPart> burgerParts;
 
@@ -19,22 +19,23 @@ public class Burger : MonoBehaviour
 
     void Update()
     {
-        while (update)
+        if (update)
         {
             CreateRandomBurger(burgerSize);
-            CreateRandomBurger(burgerSize); RenderBurger();
+            RenderBurger();
 
             update = false;
         }
     }
 
-    private void RenderBurger() 
+    public void RenderBurger() 
     {
         foreach (Transform child in transform) //Clear Burger
         {
             Destroy(child.gameObject);
         }
 
+        int index = 0;
         float nextPartZOffset = 0f;
         foreach (BurgerPart burgerPart in burgerParts)
         {
@@ -46,27 +47,38 @@ public class Burger : MonoBehaviour
                 part.transform.rotation = Quaternion.Euler(90f,0f,0f);
                 part.transform.localScale = Vector3.one * 0.5f;
             }
-            else
+            else //All Burger Parts
             {
                 part = Instantiate(burgerPart.model, transform);
                 part.transform.localScale *= burgerPart.scale;
+                if(burgerPart.name != "Bun")
+                {
+                    part.tag = "BurgerPart";
+                    part.AddComponent<BurgerPartCollider>();
+                    var partCollider = part.GetComponent<BurgerPartCollider>();
+                    partCollider.burger = this;
+                    partCollider.index = index;                    
+                }
             }
             part.name = burgerPart.name;
             part.transform.position = burgerPart.offset + Vector3.up * nextPartZOffset;
             nextPartZOffset += burgerPart.modelHeight;
+
+            index++;
         }
+
     }
 
     private void CreateRandomBurger(int size)
     {
         burgerParts.Clear();
-        burgerParts.Add(instance.burgerPartPrefabs[1]);
+        burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[1]);
         for (int i = 0; i < size; i++)
         {
-            int index = UnityEngine.Random.Range(2, instance.burgerPartPrefabs.Count);
-            burgerParts.Add(instance.burgerPartPrefabs[index]);
+            int index = UnityEngine.Random.Range(2, instanceBurgerManager.burgerPartPrefabs.Count);
+            burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[index]);
         }
-        burgerParts.Add(instance.burgerPartPrefabs[0]);
+        burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[0]);
     }
 
     private void CreateDebugBurger() //Include all burgerPartPrefabs
@@ -74,12 +86,12 @@ public class Burger : MonoBehaviour
         burgerParts.Clear();
         BurgerPart debugPlane = new BurgerPart();
         debugPlane.name = "Debug Plane";
-        foreach (BurgerPart burgerPart in instance.burgerPartPrefabs.Skip(1))
+        foreach (BurgerPart burgerPart in instanceBurgerManager.burgerPartPrefabs.Skip(1))
         {
             burgerParts.Add(burgerPart);
             burgerParts.Add(debugPlane);
         }
-        burgerParts.Add(instance.burgerPartPrefabs[0]);
+        burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[0]);
     }
 
     //Funny cheese count
@@ -89,8 +101,18 @@ public class Burger : MonoBehaviour
     //    count++;
     //    foreach (var burgerPart in burgerParts)
     //    {
-    //        if (burgerPart.name != "Cheese" && burgerPart.name != "Top Bun" && burgerPart.name != "Bottom Bun") return;
+    //        if (burgerPart.name != "Cheese" && burgerPart.name != "Bun") return;
     //    }
     //    Debug.Log("Count: " + count);
     //}
+
+    public void AddBurgerPart(BurgerPart burgerPart)
+    {
+        burgerParts.Add(burgerPart);
+    }
+
+    public void RemoveBurgerPart()
+    {
+
+    }
 }

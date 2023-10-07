@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BurgerPrefabs : MonoBehaviour
+public class BurgerManager : MonoBehaviour
 {
-    public static BurgerPrefabs instance;
+    public static BurgerManager instanceBurgerManager;
 
     [Serializable]
     public class BurgerPart
@@ -23,22 +23,22 @@ public class BurgerPrefabs : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (instanceBurgerManager != null && instanceBurgerManager != this)
         {
             Destroy(this);
         }
         else
         {
-            instance = this;
+            instanceBurgerManager = this;
         }
         BurgerPart topBun = new BurgerPart();
-        topBun.name = "Top Bun";
+        topBun.name = "Bun";
         topBun.model = (GameObject)Resources.Load("Prefabs/Buns/topbun");
         topBun.offset = new Vector3(1f, 2.2f, 0.5f) / 15f;
         topBun.scale = 1 / 15f;
         burgerPartPrefabs.Add(topBun);
         BurgerPart bottomBun = new BurgerPart();
-        bottomBun.name = "Bottom Bun";
+        bottomBun.name = "Bun";
         bottomBun.model = (GameObject)Resources.Load("Prefabs/Buns/bottombun");
         bottomBun.modelHeight = 1.1f / 15f;
         bottomBun.scale = 1 / 15f;

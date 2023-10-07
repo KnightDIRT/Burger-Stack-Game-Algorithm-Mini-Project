@@ -209,7 +209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0.7, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -389,7 +389,7 @@ GameObject:
   - component: {fileID: 575301271}
   - component: {fileID: 575301270}
   m_Layer: 0
-  m_Name: Burger Prefabs Manager
+  m_Name: Burger Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -404,7 +404,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 575301269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33a0918010584b449a9c877a81bcd229, type: 3}
+  m_Script: {fileID: 11500000, guid: 57e8102af8f473a48aac016a788456f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   burgerPartPrefabs: []
