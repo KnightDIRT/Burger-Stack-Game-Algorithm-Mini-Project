@@ -62,7 +62,7 @@ public class Burger : MonoBehaviour
         burgerParts.Add(instance.burgerPartPrefabs[1]);
         for (int i = 0; i < size; i++)
         {
-            int index = UnityEngine.Random.Range(2, burgerParts.Count);
+            int index = UnityEngine.Random.Range(2, instance.burgerPartPrefabs.Count);
             burgerParts.Add(instance.burgerPartPrefabs[index]);
         }
         burgerParts.Add(instance.burgerPartPrefabs[0]);
