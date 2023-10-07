@@ -411,9 +411,24 @@ MonoBehaviour:
   inspectorAssignedBurgerPartPrefabs:
   - name: Cheese
     model: {fileID: 919132149155446097, guid: 20e50eb0323cb254c808df77bfae94ae, type: 3}
-    modelHeight: 0.36
-    offset: {x: 0, y: 0.3, z: 0}
-    scale: {x: 0, y: 0, z: 0}
+    modelHeight: 0.024
+    offset: {x: 0, y: 0.02, z: 0}
+    scale: 0.06666667
+  - name: Steak
+    model: {fileID: 919132149155446097, guid: 31dabdc55e3c84f47a19fd2411be8a81, type: 3}
+    modelHeight: 0.046
+    offset: {x: 0, y: 0.035, z: 0}
+    scale: 0.06666667
+  - name: Steak
+    model: {fileID: 919132149155446097, guid: 1283d22ea97bf00469bc76c6a611e1ae, type: 3}
+    modelHeight: 0.046
+    offset: {x: 0, y: 0.035, z: 0}
+    scale: 0.06666667
+  - name: Steak
+    model: {fileID: 919132149155446097, guid: 7fa54cd995c48474090d73f2f45b22e2, type: 3}
+    modelHeight: 0.046
+    offset: {x: 0, y: 0.035, z: 0}
+    scale: 0.06666667
 --- !u!4 &575301271
 Transform:
   m_ObjectHideFlags: 0
@@ -496,7 +511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4023578174255116, guid: f3e44870c7d004aa3a92cdfabc5207bc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4023578174255116, guid: f3e44870c7d004aa3a92cdfabc5207bc, type: 3}
       propertyPath: m_LocalPosition.z

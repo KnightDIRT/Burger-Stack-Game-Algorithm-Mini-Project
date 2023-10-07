@@ -15,10 +15,10 @@ public class BurgerPrefabs : MonoBehaviour
         public GameObject model = null;
         public float modelHeight = 0f;
         public Vector3 offset = Vector3.zero;
-        public Vector3 scale = Vector3.one;
+        public float scale = 1f;
     }
 
-    public List<BurgerPart> burgerPartPrefabs = new List<BurgerPart>(); //0 is top bun, 1 is bottom bun
+    [HideInInspector] public List<BurgerPart> burgerPartPrefabs = new List<BurgerPart>(); //0 is top bun, 1 is bottom bun
     [SerializeField] private List<BurgerPart> inspectorAssignedBurgerPartPrefabs;
 
     private void Awake()
@@ -34,12 +34,14 @@ public class BurgerPrefabs : MonoBehaviour
         BurgerPart topBun = new BurgerPart();
         topBun.name = "Top Bun";
         topBun.model = (GameObject)Resources.Load("Prefabs/Buns/topbun");
-        topBun.offset = new Vector3(1f, 2.2f, 0.5f);
+        topBun.offset = new Vector3(1f, 2.2f, 0.5f) / 15f;
+        topBun.scale = 1 / 15f;
         burgerPartPrefabs.Add(topBun);
         BurgerPart bottomBun = new BurgerPart();
         bottomBun.name = "Bottom Bun";
         bottomBun.model = (GameObject)Resources.Load("Prefabs/Buns/bottombun");
-        bottomBun.modelHeight = 1.1f;
+        bottomBun.modelHeight = 1.1f / 15f;
+        bottomBun.scale = 1 / 15f;
         burgerPartPrefabs.Add(bottomBun);
         burgerPartPrefabs.AddRange(inspectorAssignedBurgerPartPrefabs);
     }

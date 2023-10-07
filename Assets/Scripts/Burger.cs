@@ -7,6 +7,10 @@ using static BurgerPrefabs;
 
 public class Burger : MonoBehaviour
 {
+    [SerializeField] bool update;
+    [SerializeField] int burgerSize;
+    
+    
     public List<BurgerPart> burgerParts;
 
     private void Start()
@@ -15,8 +19,12 @@ public class Burger : MonoBehaviour
 
     void Update()
     {
-        CreateDebugBurger();
-        RenderBurger();
+        if (update)
+        {
+            CreateRandomBurger(burgerSize);
+            RenderBurger();
+            update = false;
+        } 
     }
 
     private void RenderBurger() 
@@ -35,12 +43,12 @@ public class Burger : MonoBehaviour
                 part = GameObject.CreatePrimitive(PrimitiveType.Quad);
                 part.transform.parent = transform;
                 part.transform.rotation = Quaternion.Euler(90f,0f,0f);
-                part.transform.localScale = Vector3.one * 3f;
+                part.transform.localScale = Vector3.one * 0.5f;
             }
             else
             {
                 part = Instantiate(burgerPart.model, transform);
-                //part.transform.localScale = burgerPart.scale;
+                part.transform.localScale *= burgerPart.scale;
             }
             part.name = burgerPart.name;
             part.transform.position = burgerPart.offset + Vector3.up * nextPartZOffset;
@@ -50,7 +58,14 @@ public class Burger : MonoBehaviour
 
     private void CreateRandomBurger(int size)
     {
-
+        burgerParts.Clear();
+        burgerParts.Add(instance.burgerPartPrefabs[1]);
+        for (int i = 0; i < size; i++)
+        {
+            int index = UnityEngine.Random.Range(2, burgerParts.Count);
+            burgerParts.Add(instance.burgerPartPrefabs[index]);
+        }
+        burgerParts.Add(instance.burgerPartPrefabs[0]);
     }
 
     private void CreateDebugBurger() //Include all burgerPartPrefabs
