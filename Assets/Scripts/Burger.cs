@@ -26,13 +26,13 @@ public class Burger : MonoBehaviour
             if (update)
             {
                 CreateRandomBurger(burgerSize);
-                RegenerateBurger(extraOffset);
+                RegenerateBurger();
                 update = false;
             }
         }
     }
 
-    public void RegenerateBurger(float extraOffset = 0f) 
+    public void RegenerateBurger() 
     {
         foreach (Transform child in transform) //Clear Burger
         {

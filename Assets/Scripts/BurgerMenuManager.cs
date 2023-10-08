@@ -15,13 +15,17 @@ public class BurgerMenuManager : MonoBehaviour
         {
             var iconUI = new GameObject();
             iconUI.name = burgerPart.name;
-            iconUI.AddComponent<RawImage>();
-            iconUI.GetComponent<RawImage>().texture = burgerPart.icon;
+            var rawImage = iconUI.AddComponent<RawImage>();
+            rawImage.texture = burgerPart.icon;
             iconUI.transform.parent = transform.Find("Scroll View").Find("Viewport").Find("Content");
             var iconTransform = iconUI.GetComponent<RectTransform>();
             iconTransform.anchoredPosition3D = Vector3.zero;
             iconTransform.localRotation = Quaternion.identity;
             iconTransform.localScale = Vector3.one;
+
+            var iconCode = iconUI.AddComponent<BurgerMenuIcon>();
+            iconCode.burger = targetBurger;
+            iconCode.burgerPartPrefab = burgerPart;
         }
     }
 
