@@ -1214,6 +1214,7 @@ GameObject:
   - component: {fileID: 1709398212}
   - component: {fileID: 1709398211}
   - component: {fileID: 1709398210}
+  - component: {fileID: 1709398214}
   m_Layer: 5
   m_Name: Canvas Burger Menu
   m_TagString: Untagged
@@ -1305,3 +1306,16 @@ RectTransform:
   m_AnchoredPosition: {x: 1.1464467, y: 1}
   m_SizeDelta: {x: 1080, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1709398214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709398209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f118113c56ee0d041aec688ae53fb721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetBurger: {fileID: 623924651}
