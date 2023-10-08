@@ -1147,9 +1147,25 @@ MonoBehaviour:
     models:
     - model: {fileID: 2351762788884638724, guid: e8cadf18d4fe84f4a87a5070bb0aaefe,
         type: 3}
-      modelHeight: -0.23
-      offset: {x: -0.06, y: 0.25, z: -0.21}
+      modelHeight: 0.03
+      offset: {x: 0, y: -0.015, z: 0}
       scale: 1.4
+  - name: Slices of tomato
+    icon: {fileID: 2800000, guid: bb7faf4c850ef48cdb33c2bd17737619, type: 3}
+    models:
+    - model: {fileID: 7658459057806602093, guid: 7bd79e31a8a52ee479aedd3993fb7105,
+        type: 3}
+      modelHeight: 0.015
+      offset: {x: 0, y: 0, z: 0}
+      scale: 1
+  - name: Slices of bell pepper
+    icon: {fileID: 2800000, guid: b5301d66bded702479ad118154dceb1f, type: 3}
+    models:
+    - model: {fileID: 8328669501812221180, guid: d1c75379d40e4f440b16806b5d73ed60,
+        type: 3}
+      modelHeight: 0.015
+      offset: {x: 0, y: -0.01, z: 0}
+      scale: 1.2
 --- !u!4 &1530521618
 Transform:
   m_ObjectHideFlags: 0
