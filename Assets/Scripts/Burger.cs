@@ -68,9 +68,14 @@ public class Burger : MonoBehaviour
             if(burgerPart.name != "Bun")
             {
                 burgerPart.physical.tag = "BurgerPart";
-                var partCollider = burgerPart.physical.AddComponent<BurgerPartCollider>();
-                partCollider.burger = this;
-                partCollider.index = index;
+                var partCollider = burgerPart.physical.AddComponent<BoxCollider>();
+                partCollider.isTrigger = true;
+                var colliderBound = instanceBurgerManager.burgerPartPrefabs[1].models[0].model.GetComponent<Renderer>().bounds.size / 15f;
+                colliderBound.y = burgerPart.models[burgerPart.chosenModel].modelHeight + burgerPart.models[burgerPart.chosenModel].offset.y;
+                partCollider.size = burgerPart.physical.transform.InverseTransformVector(colliderBound);
+                var partColliderCode = burgerPart.physical.AddComponent<BurgerPartCollider>();
+                partColliderCode.burger = this;
+                partColliderCode.index = index;
             }
             burgerPart.physical.name = burgerPart.name;
             burgerPart.physical.transform.position = burgerPart.models[burgerPart.chosenModel].offset + Vector3.up * nextPartZOffset;
