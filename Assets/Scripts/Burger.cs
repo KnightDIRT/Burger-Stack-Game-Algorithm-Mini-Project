@@ -14,10 +14,6 @@ public class Burger : MonoBehaviour
 
     public List<BurgerPart> burgerParts;
 
-    private void Start()
-    {
-    }
-
     void Update()
     {
         if (update)
@@ -41,6 +37,7 @@ public class Burger : MonoBehaviour
         float nextPartZOffset = 0f;
         foreach (BurgerPart burgerPart in burgerParts)
         {
+            int randPartI = UnityEngine.Random.Range(0, burgerPart.models.Count);
             GameObject part;
             if (burgerPart.name == "Debug Plane")
             {
@@ -51,8 +48,8 @@ public class Burger : MonoBehaviour
             }
             else //All Burger Parts
             {
-                part = Instantiate(burgerPart.model, transform);
-                part.transform.localScale *= burgerPart.scale;
+                part = Instantiate(burgerPart.models[randPartI].model, transform);
+                part.transform.localScale *= burgerPart.models[randPartI].scale;
                 if(burgerPart.name != "Bun")
                 {
                     part.tag = "BurgerPart";
@@ -64,8 +61,8 @@ public class Burger : MonoBehaviour
                 }
             }
             part.name = burgerPart.name;
-            part.transform.position = burgerPart.offset + Vector3.up * nextPartZOffset;
-            nextPartZOffset += burgerPart.modelHeight + burgerPart.offset.y + extraOffset;
+            part.transform.position = burgerPart.models[randPartI].offset + Vector3.up * nextPartZOffset;
+            nextPartZOffset += burgerPart.models[randPartI].modelHeight + burgerPart.models[randPartI].offset.y + extraOffset;
 
             index++;
         }
