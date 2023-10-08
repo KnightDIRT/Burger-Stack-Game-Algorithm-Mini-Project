@@ -113,9 +113,4 @@ public class Burger : MonoBehaviour
     {
         burgerParts.Add(burgerPart);
     }
-
-    public void RemoveBurgerPart()
-    {
-
-    }
 }
