@@ -610,7 +610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5651448ced98346bc36188ff4ce624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
+  debug: 0
   update: 1
   burgerSize: 10
   extraOffset: 0

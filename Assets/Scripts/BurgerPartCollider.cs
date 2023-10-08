@@ -13,11 +13,6 @@ public class BurgerPartCollider : MonoBehaviour
 
     private Vector3 initialMousePos;
 
-    private void Awake()
-    {
-     
-    }
-
     private void OnMouseDown()
     {
         initialMousePos = Input.mousePosition;

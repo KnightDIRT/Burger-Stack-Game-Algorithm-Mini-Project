@@ -43,10 +43,9 @@ public class Burger : MonoBehaviour
         float nextPartZOffset = 0f;
         foreach (BurgerPart burgerPart in burgerParts)
         {
-            int randPartI = UnityEngine.Random.Range(0, burgerPart.models.Count);
             GameObject part;
-            part = Instantiate(burgerPart.models[randPartI].model, transform);
-            part.transform.localScale *= burgerPart.models[randPartI].scale;
+            part = Instantiate(burgerPart.models[burgerPart.chosenModel].model, transform);
+            part.transform.localScale *= burgerPart.models[burgerPart.chosenModel].scale;
             if(burgerPart.name != "Bun")
             {
                 part.tag = "BurgerPart";
@@ -57,8 +56,8 @@ public class Burger : MonoBehaviour
                 partCollider.extraOffset = extraOffset;
             }
             part.name = burgerPart.name;
-            part.transform.position = burgerPart.models[randPartI].offset + Vector3.up * nextPartZOffset;
-            nextPartZOffset += burgerPart.models[randPartI].modelHeight + burgerPart.models[randPartI].offset.y + extraOffset;
+            part.transform.position = burgerPart.models[burgerPart.chosenModel].offset + Vector3.up * nextPartZOffset;
+            nextPartZOffset += burgerPart.models[burgerPart.chosenModel].modelHeight + burgerPart.models[burgerPart.chosenModel].offset.y + extraOffset;
 
             index++;
         }
@@ -71,7 +70,9 @@ public class Burger : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             int index = UnityEngine.Random.Range(2, instanceBurgerManager.burgerPartPrefabs.Count);
-            burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[index]);
+            var part = instanceBurgerManager.burgerPartPrefabs[index];
+            part.chosenModel = UnityEngine.Random.Range(0, part.models.Count);
+            burgerParts.Add(part.Clone());
         }
         burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[0]);
     }
@@ -120,6 +121,7 @@ public class Burger : MonoBehaviour
 
     public void AddBurgerPart(BurgerPart burgerPart)
     {
-        burgerParts.Add(burgerPart);
+        burgerPart.chosenModel = UnityEngine.Random.Range(0, burgerPart.models.Count);
+        burgerParts.Insert(burgerParts.Count-1, burgerPart.Clone());
     }
 }
