@@ -1,3 +1,4 @@
+using PW;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,6 +25,19 @@ public class BurgerManager : MonoBehaviour
         public string name = "";
         public Texture2D icon = null;
         public List<BurgerModel> models = new List<BurgerModel>();
+
+        [HideInInspector] public GameObject physical;
+        [HideInInspector] public int chosenModel;
+        
+        public BurgerPart Clone()
+        {
+            BurgerPart clone = new BurgerPart();
+            clone.name = name;
+            clone.icon = icon;
+            clone.models = models;
+            clone.chosenModel = chosenModel;
+            return clone;
+        }
     }
 
     [HideInInspector] public List<BurgerPart> burgerPartPrefabs = new List<BurgerPart>(); //0 is top bun, 1 is bottom bun

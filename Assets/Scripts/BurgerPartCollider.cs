@@ -5,24 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class BurgerPartCollider : MonoBehaviour
 {
-    private float dragOutThreshold = 300f;
-
     public Burger burger;
     public int index;
-    public float extraOffset;
 
-    private Vector3 initialMousePos;
-
-    private void Awake()
-    {
-     
-    }
-
-    private void OnMouseDown()
-    {
-        initialMousePos = Input.mousePosition;
-    }
-    
     private void OnMouseDrag()
     {
         RaycastHit hit;
@@ -36,14 +21,17 @@ public class BurgerPartCollider : MonoBehaviour
                 var temp = burger.burgerParts[index];
                 burger.burgerParts[index] = burger.burgerParts[swapIndex];
                 burger.burgerParts[swapIndex] = temp;
-                burger.RegenerateBurger(extraOffset);
+                var tempIndex = index;
+                index = swapIndex;
+                swapIndex = tempIndex;
+                burger.ReRenderBurger();
             }
         }
 
-        if(Vector3.Distance(initialMousePos, Input.mousePosition) >= dragOutThreshold)
+        if(Input.GetMouseButtonDown(1))
         {
             burger.burgerParts.RemoveAt(index);
-            burger.RegenerateBurger(extraOffset);
+            burger.RegenerateBurger();
         }
     }
 }

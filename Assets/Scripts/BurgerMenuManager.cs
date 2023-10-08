@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
 using static BurgerManager;
@@ -15,19 +16,18 @@ public class BurgerMenuManager : MonoBehaviour
         {
             var iconUI = new GameObject();
             iconUI.name = burgerPart.name;
-            iconUI.AddComponent<RawImage>();
-            iconUI.GetComponent<RawImage>().texture = burgerPart.icon;
-            iconUI.transform.parent = transform.Find("Scroll View").Find("Viewport").Find("Content");
+            var rawImage = iconUI.AddComponent<RawImage>();
+            rawImage.texture = burgerPart.icon;
             var iconTransform = iconUI.GetComponent<RectTransform>();
+            iconTransform.SetParent(transform.Find("Scroll View").Find("Viewport").Find("Content"));
             iconTransform.anchoredPosition3D = Vector3.zero;
             iconTransform.localRotation = Quaternion.identity;
             iconTransform.localScale = Vector3.one;
-        }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            var iconCode = iconUI.AddComponent<BurgerMenuIcon>();
+            iconCode.burger = targetBurger;
+            iconCode.burgerPartPrefab = burgerPart;
+            iconCode.button = iconUI.AddComponent<Button>();
+        }
     }
 }
