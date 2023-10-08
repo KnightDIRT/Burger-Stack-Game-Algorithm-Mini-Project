@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using static BurgerManager;
 
 public class BurgerMenuManager : MonoBehaviour
@@ -15,6 +16,8 @@ public class BurgerMenuManager : MonoBehaviour
             var iconUI = new GameObject();
             iconUI.name = burgerPart.name;
             iconUI.transform.parent = transform.Find("Scroll View").Find("Viewport").Find("Content");
+            iconUI.AddComponent<RawImage>();
+            iconUI.GetComponent<RawImage>().texture = burgerPart.icon;
         }
     }
 
