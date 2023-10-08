@@ -43,20 +43,17 @@ public class Burger : MonoBehaviour
         float nextPartZOffset = 0f;
         foreach (BurgerPart burgerPart in burgerParts)
         {
-            GameObject part;
-            part = Instantiate(burgerPart.models[burgerPart.chosenModel].model, transform);
-            part.transform.localScale *= burgerPart.models[burgerPart.chosenModel].scale;
+            burgerPart.physical = Instantiate(burgerPart.models[burgerPart.chosenModel].model, transform);
+            burgerPart.physical.transform.localScale *= burgerPart.models[burgerPart.chosenModel].scale;
             if(burgerPart.name != "Bun")
             {
-                part.tag = "BurgerPart";
-                part.AddComponent<BurgerPartCollider>();
-                var partCollider = part.GetComponent<BurgerPartCollider>();
+                burgerPart.physical.tag = "BurgerPart";
+                var partCollider = burgerPart.physical.AddComponent<BurgerPartCollider>();
                 partCollider.burger = this;
                 partCollider.index = index;
-                partCollider.extraOffset = extraOffset;
             }
-            part.name = burgerPart.name;
-            part.transform.position = burgerPart.models[burgerPart.chosenModel].offset + Vector3.up * nextPartZOffset;
+            burgerPart.physical.name = burgerPart.name;
+            burgerPart.physical.transform.position = burgerPart.models[burgerPart.chosenModel].offset + Vector3.up * nextPartZOffset;
             nextPartZOffset += burgerPart.models[burgerPart.chosenModel].modelHeight + burgerPart.models[burgerPart.chosenModel].offset.y + extraOffset;
 
             index++;
@@ -123,5 +120,15 @@ public class Burger : MonoBehaviour
     {
         burgerPart.chosenModel = UnityEngine.Random.Range(0, burgerPart.models.Count);
         burgerParts.Insert(burgerParts.Count-1, burgerPart.Clone());
+    }
+
+    public void ReRenderBurger()
+    {
+        float nextPartZOffset = 0f;
+        foreach (BurgerPart burgerPart in burgerParts)
+        {
+            burgerPart.physical.transform.position = burgerPart.models[burgerPart.chosenModel].offset + Vector3.up * nextPartZOffset;
+            nextPartZOffset += burgerPart.models[burgerPart.chosenModel].modelHeight + burgerPart.models[burgerPart.chosenModel].offset.y + extraOffset;
+        }
     }
 }

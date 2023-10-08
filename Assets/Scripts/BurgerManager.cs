@@ -26,7 +26,8 @@ public class BurgerManager : MonoBehaviour
         public Texture2D icon = null;
         public List<BurgerModel> models = new List<BurgerModel>();
 
-        public int chosenModel;
+        [HideInInspector] public GameObject physical;
+        [HideInInspector] public int chosenModel;
         
         public BurgerPart Clone()
         {
