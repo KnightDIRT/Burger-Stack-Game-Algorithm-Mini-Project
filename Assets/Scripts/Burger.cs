@@ -110,7 +110,7 @@ public class Burger : MonoBehaviour
                 part.transform.parent = transform;
                 part.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
                 part.transform.localScale = Vector3.one * 0.5f;
-                part.transform.position = burgerPart.models[randPartI].offset + Vector3.up * nextPartZOffset;
+                part.transform.position = Vector3.up * ( nextPartZOffset + burgerPart.models[randPartI].offset.z );
                 nextPartZOffset += extraOffset;
 
                 index++;
