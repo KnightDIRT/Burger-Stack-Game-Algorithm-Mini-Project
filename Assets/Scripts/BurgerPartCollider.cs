@@ -9,6 +9,7 @@ public class BurgerPartCollider : MonoBehaviour
 
     public Burger burger;
     public int index;
+    public float extraOffset;
 
     private Vector3 initialMousePos;
 
@@ -35,17 +36,14 @@ public class BurgerPartCollider : MonoBehaviour
                 var temp = burger.burgerParts[index];
                 burger.burgerParts[index] = burger.burgerParts[swapIndex];
                 burger.burgerParts[swapIndex] = temp;
-                var tempIndex = index;
-                index = swapIndex;
-                swapIndex = tempIndex;
-                burger.ReRenderBurger();
+                burger.RegenerateBurger(extraOffset);
             }
         }
 
         if(Vector3.Distance(initialMousePos, Input.mousePosition) >= dragOutThreshold)
         {
             burger.burgerParts.RemoveAt(index);
-            burger.RegenerateBurger();
+            burger.RegenerateBurger(extraOffset);
         }
     }
 }

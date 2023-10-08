@@ -10,7 +10,8 @@ public class Burger : MonoBehaviour
 {
     [SerializeField] bool update;
     [SerializeField] int burgerSize;
-    
+    [SerializeField] float extraOffset;
+
     public List<BurgerPart> burgerParts;
 
     private void Start()
@@ -21,15 +22,15 @@ public class Burger : MonoBehaviour
     {
         if (update)
         {
+            //CreateDebugBurger();
             CreateRandomBurger(burgerSize);
-            RegenerateBurger();
 
+            RegenerateBurger(extraOffset);
             update = false;
         }
-        ReRenderBurger();
     }
 
-    public void RegenerateBurger() 
+    public void RegenerateBurger(float extraOffset = 0f) 
     {
         foreach (Transform child in transform) //Clear Burger
         {
@@ -58,27 +59,17 @@ public class Burger : MonoBehaviour
                     part.AddComponent<BurgerPartCollider>();
                     var partCollider = part.GetComponent<BurgerPartCollider>();
                     partCollider.burger = this;
-                    partCollider.index = index;                    
+                    partCollider.index = index;
+                    partCollider.extraOffset = extraOffset;
                 }
             }
             part.name = burgerPart.name;
             part.transform.position = burgerPart.offset + Vector3.up * nextPartZOffset;
-            burgerPart.physical = part;
-            nextPartZOffset += burgerPart.modelHeight;
+            nextPartZOffset += burgerPart.modelHeight + burgerPart.offset.y + extraOffset;
 
             index++;
         }
 
-    }
-
-    public void ReRenderBurger()
-    {
-        float nextPartZOffset = 0f;
-        foreach (BurgerPart burgerPart in burgerParts)
-        {
-            burgerPart.physical.transform.position = burgerPart.offset + Vector3.up * nextPartZOffset;
-            nextPartZOffset += burgerPart.modelHeight;
-        }
     }
 
     private void CreateRandomBurger(int size)

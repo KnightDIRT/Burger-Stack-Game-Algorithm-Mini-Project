@@ -16,8 +16,6 @@ public class BurgerManager : MonoBehaviour
         public float modelHeight = 0f;
         public Vector3 offset = Vector3.zero;
         public float scale = 1f;
-
-        public GameObject physical;
     }
 
     [HideInInspector] public List<BurgerPart> burgerPartPrefabs = new List<BurgerPart>(); //0 is top bun, 1 is bottom bun
