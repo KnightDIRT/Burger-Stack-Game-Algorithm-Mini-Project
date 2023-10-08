@@ -353,7 +353,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &410087042
 MonoBehaviour:
@@ -644,7 +644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4023578174255116, guid: f3e44870c7d004aa3a92cdfabc5207bc, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4023578174255116, guid: f3e44870c7d004aa3a92cdfabc5207bc, type: 3}
       propertyPath: m_LocalScale.x
@@ -1126,6 +1126,30 @@ MonoBehaviour:
       modelHeight: 0.03
       offset: {x: 0.05, y: 0.03, z: 0}
       scale: 1
+  - name: Chicken leg
+    icon: {fileID: 2800000, guid: eec0facfca0a442239269e367daaad9c, type: 3}
+    models:
+    - model: {fileID: 2032871071839861406, guid: 5fadbd55bf5ebcc40a93f78fd18e0ac2,
+        type: 3}
+      modelHeight: 0.025
+      offset: {x: -0.075, y: 0.03, z: 0}
+      scale: 1
+  - name: Burger
+    icon: {fileID: 2800000, guid: 95d79036550fa7b489e4b901d380136b, type: 3}
+    models:
+    - model: {fileID: 3497648976292558775, guid: 61eb9089fa725794e8752ee5bca58f8c,
+        type: 3}
+      modelHeight: 0.14
+      offset: {x: 0, y: 0, z: 0}
+      scale: 1
+  - name: Mushrooms
+    icon: {fileID: 2800000, guid: 8f984065dded1464b9b14d7a205f5275, type: 3}
+    models:
+    - model: {fileID: 2351762788884638724, guid: e8cadf18d4fe84f4a87a5070bb0aaefe,
+        type: 3}
+      modelHeight: -0.23
+      offset: {x: -0.06, y: 0.25, z: -0.21}
+      scale: 1.4
 --- !u!4 &1530521618
 Transform:
   m_ObjectHideFlags: 0
