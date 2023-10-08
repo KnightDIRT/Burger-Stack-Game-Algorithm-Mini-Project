@@ -23,7 +23,7 @@ public class BurgerManager : MonoBehaviour
     {
         public string name = "";
         public Texture2D icon = null;
-        public List<BurgerModel> models = null;
+        public List<BurgerModel> models = new List<BurgerModel>();
     }
 
     [HideInInspector] public List<BurgerPart> burgerPartPrefabs = new List<BurgerPart>(); //0 is top bun, 1 is bottom bun
@@ -39,17 +39,22 @@ public class BurgerManager : MonoBehaviour
         {
             instanceBurgerManager = this;
         }
+
         BurgerPart topBun = new BurgerPart();
         topBun.name = "Bun";
-        topBun.models[0].model = (GameObject)Resources.Load("Prefabs/Buns/topbun");
-        topBun.models[0].offset = new Vector3(1f, 2.2f, 0.5f) / 15f;
-        topBun.models[0].scale = 1 / 15f;
+        BurgerModel topModel = new BurgerModel();
+        topModel.model = (GameObject)Resources.Load("Prefabs/Buns/topbun");
+        topModel.offset = new Vector3(1f, 2.2f, 0.5f) / 15f;
+        topModel.scale = 1 / 15f;
+        topBun.models.Add(topModel);
         burgerPartPrefabs.Add(topBun);
         BurgerPart bottomBun = new BurgerPart();
         bottomBun.name = "Bun";
-        bottomBun.models[0].model = (GameObject)Resources.Load("Prefabs/Buns/bottombun");
-        bottomBun.models[0].modelHeight = 1.1f / 15f;
-        bottomBun.models[0].scale = 1 / 15f;
+        BurgerModel bottomModel = new BurgerModel();
+        bottomModel.model = (GameObject)Resources.Load("Prefabs/Buns/bottombun");
+        bottomModel.modelHeight = 1.1f / 15f;
+        bottomModel.scale = 1 / 15f;
+        bottomBun.models.Add(bottomModel);
         burgerPartPrefabs.Add(bottomBun);
         burgerPartPrefabs.AddRange(inspectorAssignedBurgerPartPrefabs);
     }
