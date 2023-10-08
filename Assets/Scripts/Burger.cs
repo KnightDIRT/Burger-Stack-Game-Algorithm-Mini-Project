@@ -68,14 +68,21 @@ public class Burger : MonoBehaviour
             if(burgerPart.name != "Bun")
             {
                 burgerPart.physical.tag = "BurgerPart";
-                var partCollider = burgerPart.physical.AddComponent<BoxCollider>();
-                partCollider.isTrigger = true;
+                var rigidbody = burgerPart.physical.AddComponent<Rigidbody>();
+                rigidbody.isKinematic = true;
+                var colliderObject = new GameObject();
+                colliderObject.name = "Collider";
+                colliderObject.transform.parent = burgerPart.physical.transform;
+                colliderObject.transform.position = Vector3.zero;
+                var collider = colliderObject.AddComponent<BoxCollider>();
+                collider.isTrigger = true;
+                collider.center = new Vector3(-burgerPart.models[burgerPart.chosenModel].offset.x, 0, -burgerPart.models[burgerPart.chosenModel].offset.z);
                 var colliderBound = instanceBurgerManager.burgerPartPrefabs[1].models[0].model.GetComponent<Renderer>().bounds.size / 15f;
                 colliderBound.y = burgerPart.models[burgerPart.chosenModel].modelHeight + burgerPart.models[burgerPart.chosenModel].offset.y;
-                partCollider.size = burgerPart.physical.transform.InverseTransformVector(colliderBound);
-                var partColliderCode = burgerPart.physical.AddComponent<BurgerPartCollider>();
-                partColliderCode.burger = this;
-                partColliderCode.index = index;
+                collider.size = colliderBound;
+                var colliderCode = burgerPart.physical.AddComponent<BurgerPartCollider>();
+                colliderCode.burger = this;
+                colliderCode.index = index;
             }
             burgerPart.physical.name = burgerPart.name;
             burgerPart.physical.transform.position = burgerPart.models[burgerPart.chosenModel].offset + Vector3.up * nextPartZOffset;
