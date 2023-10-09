@@ -115,6 +115,10 @@ public class BurgerManager : MonoBehaviour
         //[1]: 0 is same count, >0 is number count mismatch
         int missMatch = 0;
         Dictionary<string, int> burgerCount = new Dictionary<string, int>();
+        foreach(BurgerPart partPrefab in burgerPartPrefabs.Skip(1))
+        {
+            burgerCount.Add(partPrefab.name, 0);
+        }
 
         int len = Mathf.Max(burger1.burgerParts.Count, burger2.burgerParts.Count);
         for(int i = 0; i < len; i++)
