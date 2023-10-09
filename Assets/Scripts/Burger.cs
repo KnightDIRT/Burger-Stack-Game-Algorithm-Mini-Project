@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using static BurgerManager;
@@ -84,9 +85,13 @@ public class Burger : MonoBehaviour
                 var collider = part.AddComponent<BoxCollider>();
                 collider.isTrigger = true;
                 collider.center = new Vector3(-modelData.offset.x, modelData.modelHeight / 2, -modelData.offset.z);
-                var colliderBound = instanceBurgerManager.burgerPartPrefabs[1].models[0].model.GetComponent<Renderer>().bounds.size / 15f; //Use bottom bun as bound
-                colliderBound.y = modelData.modelHeight + modelData.offset.y + extraOffset / 2;
-                collider.size = colliderBound;
+                var bounds = new Bounds();
+                Renderer[] renderers = part.GetComponentsInChildren<Renderer>();
+                foreach (Renderer renderer in renderers)
+                {
+                    bounds.Encapsulate(renderer.bounds);
+                }
+                collider.size = new Vector3(bounds.size.x, modelData.modelHeight + modelData.offset.y + extraOffset / 2, bounds.size.z);
                 var colliderCode = part.AddComponent<BurgerPartCollider>();
                 colliderCode.burger = this;
                 colliderCode.index = index;
