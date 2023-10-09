@@ -108,4 +108,21 @@ public class BurgerManager : MonoBehaviour
         highlightBox.transform.position = part.physical.transform.position + collider.center;
         highlightBox.transform.localScale = collider.size;
     }
+
+    public int[] CompareBurger(Burger burger1, Burger burger2) 
+    {
+        //[0]: 0 is perfect match, >0 is number mismatch
+        //[1]: 0 is same count, >0 is number count mismatch
+        int missMatch = 0;
+        Dictionary<string, int> burgerCount = new Dictionary<string, int>();
+
+        int len = Mathf.Max(burger1.burgerParts.Count, burger2.burgerParts.Count);
+        for(int i = 0; i < len; i++)
+        {
+            burgerCount[burger1.burgerParts[i].name]++;
+            burgerCount[burger2.burgerParts[i].name]--;
+            if (burger1.burgerParts[i].name != burger2.burgerParts[i].name) missMatch++;
+        }
+        return new int[2] { missMatch, burgerCount.Sum(x => Mathf.Abs(x.Value)) };
+    }   
 }
