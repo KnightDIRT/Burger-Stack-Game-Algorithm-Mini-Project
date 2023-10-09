@@ -74,7 +74,7 @@ public class Burger : MonoBehaviour
             part = new GameObject();
             part.name = burgerPart.name;
             part.transform.parent = transform;
-            part.transform.position = modelData.offset + Vector3.up * nextPartZOffset;
+            part.transform.localPosition = modelData.offset + Vector3.up * nextPartZOffset;
 
             //Create model as child of part
             var model = Instantiate(modelData.model, part.transform);
@@ -87,13 +87,13 @@ public class Burger : MonoBehaviour
             {
                 var collider = part.AddComponent<BoxCollider>();
                 collider.isTrigger = true;
-                collider.center = new Vector3(-modelData.offset.x, modelData.modelHeight / 2, -modelData.offset.z);
-                var bounds = new Bounds();
+                var bounds = new Bounds(part.transform.position, Vector3.zero);
                 Renderer[] renderers = part.GetComponentsInChildren<Renderer>();
                 foreach (Renderer renderer in renderers)
                 {
                     bounds.Encapsulate(renderer.bounds);
                 }
+                collider.center = new Vector3(bounds.center.x - part.transform.position.x, modelData.modelHeight / 2, bounds.center.z - part.transform.position.z);
                 collider.size = new Vector3(bounds.size.x, modelData.modelHeight + modelData.offset.y + extraOffset / 2, bounds.size.z);
                 var colliderCode = part.AddComponent<BurgerPartCollider>();
                 colliderCode.burger = this;
