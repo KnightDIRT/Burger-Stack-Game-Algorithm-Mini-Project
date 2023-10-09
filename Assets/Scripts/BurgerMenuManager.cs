@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,8 @@ using static BurgerManager;
 public class BurgerMenuManager : MonoBehaviour
 {
     [SerializeField] Burger targetBurger;
+
+    private TMP_Text text_PartCount;
 
     private void Start()
     {
@@ -29,5 +32,12 @@ public class BurgerMenuManager : MonoBehaviour
             iconCode.burgerPartPrefab = burgerPart;
             iconCode.button = iconUI.AddComponent<Button>();
         }
+
+        text_PartCount = transform.Find("Part Count Text").GetComponent<TMP_Text>();
+    }
+
+    private void LateUpdate()
+    {
+        text_PartCount.text = (targetBurger.burgerParts.Count - 2).ToString();
     }
 }
