@@ -112,8 +112,9 @@ public class Burger : MonoBehaviour
         float nextPartZOffset = 0f;
         foreach (BurgerPart burgerPart in burgerParts)
         {
-            burgerPart.physical.transform.position = burgerPart.models[burgerPart.chosenModel].offset + Vector3.up * nextPartZOffset;
-            nextPartZOffset += burgerPart.models[burgerPart.chosenModel].modelHeight + burgerPart.models[burgerPart.chosenModel].offset.y + extraOffset;
+            var modelData = burgerPart.models[burgerPart.chosenModel];
+            burgerPart.physical.transform.localPosition = modelData.offset + Vector3.up * nextPartZOffset;
+            nextPartZOffset += modelData.modelHeight + modelData.offset.y + extraOffset;
         }
 
         burgerHeight = nextPartZOffset;
