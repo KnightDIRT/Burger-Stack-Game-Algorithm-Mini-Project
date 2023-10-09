@@ -40,11 +40,18 @@ public class BurgerMenuUIManager : MonoBehaviour
 
         text_PartCount = transform.Find("Part Count Text").GetComponent<TMP_Text>();
         viewSlider = transform.Find("View Slider").GetComponent<Slider>();
+
+        viewSlider.onValueChanged.AddListener(delegate { UpdateSliderValue(); });
     }
 
     private void LateUpdate()
     { 
         text_PartCount.text = (targetBurger.burgerParts.Count - 2).ToString();
         viewSlider.value = cameraController.viewSliderValue;
+    }
+
+    private void UpdateSliderValue()
+    {
+        cameraController.viewSliderValue = viewSlider.value;
     }
 }
