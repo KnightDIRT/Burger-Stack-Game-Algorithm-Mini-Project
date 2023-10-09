@@ -12,6 +12,13 @@ public class BurgerPartCollider : MonoBehaviour
     {
         if(Input.GetMouseButton(0)) instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 2);
         else instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 1);
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 0);
+            burger.burgerParts.RemoveAt(index);
+            burger.RegenerateBurger();
+        }
     }
 
     private void OnMouseDrag()
@@ -33,12 +40,6 @@ public class BurgerPartCollider : MonoBehaviour
                 swapIndex = tempIndex;
                 burger.ReRenderBurger();
             }
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            burger.burgerParts.RemoveAt(index);
-            burger.RegenerateBurger();
         }
     }
 
