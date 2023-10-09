@@ -63,33 +63,36 @@ public class Burger : MonoBehaviour
         float nextPartZOffset = 0f;
         foreach (BurgerPart burgerPart in burgerParts)
         {
-            //Create part as empty; With collider for dynamic parts
-            ref var part = ref burgerPart.physical;
-            part = new GameObject();
-            part.transform.parent = transform;
-            part.name = burgerPart.name;
             var modelData = burgerPart.models[burgerPart.chosenModel];
-            if (burgerPart.name != "Bun")
-            {
-                var collider = part.AddComponent<BoxCollider>();
-                collider.isTrigger = true;
-                collider.center = new Vector3(-modelData.offset.x, modelData.modelHeight/2, -modelData.offset.z);
-                var colliderBound = instanceBurgerManager.burgerPartPrefabs[1].models[0].model.GetComponent<Renderer>().bounds.size / 15f; //Use bottom bun as bound
-                colliderBound.y = modelData.modelHeight + modelData.offset.y + extraOffset/2;
-                collider.size = colliderBound;
-                var colliderCode = part.AddComponent<BurgerPartCollider>();
-                colliderCode.burger = this;
-                colliderCode.index = index;
-            }
-            part.transform.position = modelData.offset + Vector3.up * nextPartZOffset;
-            nextPartZOffset += modelData.modelHeight + modelData.offset.y + extraOffset;
+            ref var part = ref burgerPart.physical;
 
-            //Add model as child of part
+            //Create part as empty
+            part = new GameObject();
+            part.name = burgerPart.name;
+            part.transform.parent = transform;
+            part.transform.position = modelData.offset + Vector3.up * nextPartZOffset;
+
+            //Create model as child of part
             var model = Instantiate(modelData.model, part.transform);
             model.name = burgerPart.name + "_model";
             model.transform.localPosition = Vector3.zero;
             model.transform.localScale *= modelData.scale;
 
+            //Add collider for dynamic parts
+            if (burgerPart.name != "Bun")
+            {
+                var collider = part.AddComponent<BoxCollider>();
+                collider.isTrigger = true;
+                collider.center = new Vector3(-modelData.offset.x, modelData.modelHeight / 2, -modelData.offset.z);
+                var colliderBound = instanceBurgerManager.burgerPartPrefabs[1].models[0].model.GetComponent<Renderer>().bounds.size / 15f; //Use bottom bun as bound
+                colliderBound.y = modelData.modelHeight + modelData.offset.y + extraOffset / 2;
+                collider.size = colliderBound;
+                var colliderCode = part.AddComponent<BurgerPartCollider>();
+                colliderCode.burger = this;
+                colliderCode.index = index;
+            }
+
+            nextPartZOffset += modelData.modelHeight + modelData.offset.y + extraOffset;
             index++;
         }
     }

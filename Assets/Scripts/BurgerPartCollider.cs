@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static BurgerManager;
 
 public class BurgerPartCollider : MonoBehaviour
 {
     public Burger burger;
     public int index;
 
+    private void OnMouseOver()
+    {
+        if(Input.GetMouseButton(0)) instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 2);
+        else instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 1);
+    }
+
     private void OnMouseDrag()
     {
+        instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 2);
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -34,5 +42,13 @@ public class BurgerPartCollider : MonoBehaviour
         }
     }
 
+    private void OnMouseExit()
+    {
+        instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 0);
+    }
 
+    private void OnMouseUp()
+    {
+        instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 0);
+    }
 }

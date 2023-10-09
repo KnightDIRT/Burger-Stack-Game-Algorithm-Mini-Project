@@ -10,6 +10,11 @@ public class BurgerManager : MonoBehaviour
 {
     public static BurgerManager instanceBurgerManager;
 
+    private GameObject highlightBox;
+    private Renderer highlightBoxRenderer;
+    private Material overPartMaterial;
+    private Material dragPartMaterial;
+
     [Serializable]
     public class BurgerModel
     {
@@ -41,7 +46,7 @@ public class BurgerManager : MonoBehaviour
     }
 
     [HideInInspector] public List<BurgerPart> burgerPartPrefabs = new List<BurgerPart>(); //0 is top bun, 1 is bottom bun
-    [SerializeField] private List<BurgerPart> inspectorAssignedBurgerPartPrefabs;
+    [SerializeField] private List<BurgerPart> inspectorAssignedBurgerPartPrefabs; 
 
     private void Awake()
     {
@@ -53,6 +58,15 @@ public class BurgerManager : MonoBehaviour
         {
             instanceBurgerManager = this;
         }
+        
+        highlightBox = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Destroy(highlightBox.GetComponent<BoxCollider>());
+        highlightBox.transform.parent = transform;
+        highlightBox.transform.localScale = Vector3.one;
+        highlightBoxRenderer = highlightBox.GetComponent<Renderer>();
+        highlightBox.SetActive(false);
+        overPartMaterial = (Material)Resources.Load("Materials/OverPart");
+        dragPartMaterial = (Material)Resources.Load("Materials/DragPart");
 
         BurgerPart topBun = new BurgerPart();
         topBun.name = "Bun";
@@ -71,5 +85,26 @@ public class BurgerManager : MonoBehaviour
         bottomBun.models.Add(bottomModel);
         burgerPartPrefabs.Add(bottomBun);
         burgerPartPrefabs.AddRange(inspectorAssignedBurgerPartPrefabs);
+    }
+
+    public void HighlightBurgerPart(BurgerPart part, int mode) //0 = hide, 1 = over, 2 = drag
+    {
+        switch (mode)
+        {
+            case 0:
+                highlightBox.SetActive(false);
+                return;
+            case 1:
+                highlightBox.SetActive(true);
+                highlightBoxRenderer.material = overPartMaterial;
+                break;
+            case 2:
+                highlightBox.SetActive(true);
+                highlightBoxRenderer.material = dragPartMaterial;
+                break;
+        }
+        var collider = part.physical.GetComponent<BoxCollider>();
+        highlightBox.transform.position = part.physical.transform.position + collider.center;
+        highlightBox.transform.localScale = collider.size;
     }
 }
