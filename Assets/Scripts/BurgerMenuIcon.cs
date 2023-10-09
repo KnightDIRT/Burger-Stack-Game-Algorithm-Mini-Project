@@ -18,7 +18,6 @@ public class BurgerMenuIcon : MonoBehaviour
 
     private void AddPartToBurger()
     {
-        Debug.Log("clicking");
         burger.AddBurgerPart(burgerPartPrefab);
         burger.RegenerateBurger();
     }

@@ -63,30 +63,59 @@ public class Burger : MonoBehaviour
         float nextPartZOffset = 0f;
         foreach (BurgerPart burgerPart in burgerParts)
         {
-            burgerPart.physical = Instantiate(burgerPart.models[burgerPart.chosenModel].model, transform);
-            burgerPart.physical.transform.localScale *= burgerPart.models[burgerPart.chosenModel].scale;
-            if(burgerPart.name != "Bun")
+            //ref var part = ref burgerPart.physical;
+            //part = Instantiate(burgerPart.models[burgerPart.chosenModel].model, transform);
+            //part.transform.localScale *= burgerPart.models[burgerPart.chosenModel].scale;
+            //if(burgerPart.name != "Bun")
+            //{
+            //    part.tag = "BurgerPart";
+            //    var rigidbody = part.AddComponent<Rigidbody>();
+            //    rigidbody.isKinematic = true;
+            //    var colliderObject = new GameObject();
+            //    colliderObject.name = "Collider";
+            //    colliderObject.transform.parent = part.transform;
+            //    colliderObject.transform.position = Vector3.zero;
+            //    var collider = colliderObject.AddComponent<BoxCollider>();
+            //    collider.isTrigger = true;
+            //    collider.center = new Vector3(-burgerPart.models[burgerPart.chosenModel].offset.x, 0, -burgerPart.models[burgerPart.chosenModel].offset.z);
+            //    var colliderBound = instanceBurgerManager.burgerPartPrefabs[1].models[0].model.GetComponent<Renderer>().bounds.size / 15f;
+            //    colliderBound.y = burgerPart.models[burgerPart.chosenModel].modelHeight + burgerPart.models[burgerPart.chosenModel].offset.y;
+            //    collider.size = colliderBound;
+            //    var colliderCode = part.AddComponent<BurgerPartCollider>();
+            //    colliderCode.burger = this;
+            //    colliderCode.index = index;
+            //}
+            //part.name = burgerPart.name;
+            //part.transform.position = burgerPart.models[burgerPart.chosenModel].offset + Vector3.up * nextPartZOffset;
+            //nextPartZOffset += burgerPart.models[burgerPart.chosenModel].modelHeight + burgerPart.models[burgerPart.chosenModel].offset.y + extraOffset;
+
+            //index++;
+            //--------------------------------------------------------------
+            //Create part as empty; With collider for dynamic parts
+            ref var part = ref burgerPart.physical;
+            part = new GameObject();
+            part.transform.parent = transform;
+            part.name = burgerPart.name;
+            if (burgerPart.name != "Bun")
             {
-                burgerPart.physical.tag = "BurgerPart";
-                var rigidbody = burgerPart.physical.AddComponent<Rigidbody>();
-                rigidbody.isKinematic = true;
-                var colliderObject = new GameObject();
-                colliderObject.name = "Collider";
-                colliderObject.transform.parent = burgerPart.physical.transform;
-                colliderObject.transform.position = Vector3.zero;
-                var collider = colliderObject.AddComponent<BoxCollider>();
+                var collider = part.AddComponent<BoxCollider>();
                 collider.isTrigger = true;
                 collider.center = new Vector3(-burgerPart.models[burgerPart.chosenModel].offset.x, 0, -burgerPart.models[burgerPart.chosenModel].offset.z);
                 var colliderBound = instanceBurgerManager.burgerPartPrefabs[1].models[0].model.GetComponent<Renderer>().bounds.size / 15f;
                 colliderBound.y = burgerPart.models[burgerPart.chosenModel].modelHeight + burgerPart.models[burgerPart.chosenModel].offset.y;
                 collider.size = colliderBound;
-                var colliderCode = burgerPart.physical.AddComponent<BurgerPartCollider>();
+                var colliderCode = part.AddComponent<BurgerPartCollider>();
                 colliderCode.burger = this;
                 colliderCode.index = index;
             }
-            burgerPart.physical.name = burgerPart.name;
-            burgerPart.physical.transform.position = burgerPart.models[burgerPart.chosenModel].offset + Vector3.up * nextPartZOffset;
+            part.transform.position = burgerPart.models[burgerPart.chosenModel].offset + Vector3.up * nextPartZOffset;
             nextPartZOffset += burgerPart.models[burgerPart.chosenModel].modelHeight + burgerPart.models[burgerPart.chosenModel].offset.y + extraOffset;
+
+            //Add model as child of part
+            var model = Instantiate(burgerPart.models[burgerPart.chosenModel].model, part.transform);
+            model.name = burgerPart.name + "_model";
+            model.transform.localPosition = Vector3.zero;
+            model.transform.localScale *= burgerPart.models[burgerPart.chosenModel].scale;
 
             index++;
         }
