@@ -93,7 +93,7 @@ public class Burger : MonoBehaviour
                 {
                     bounds.Encapsulate(renderer.bounds);
                 }
-                collider.center = new Vector3(bounds.center.x - part.transform.position.x, modelData.modelHeight / 2, bounds.center.z - part.transform.position.z);
+                collider.center = bounds.center - part.transform.position;
                 collider.size = new Vector3(bounds.size.x, modelData.modelHeight + modelData.offset.y + extraOffset / 2, bounds.size.z);
                 var colliderCode = part.AddComponent<BurgerPartCollider>();
                 colliderCode.burger = this;
