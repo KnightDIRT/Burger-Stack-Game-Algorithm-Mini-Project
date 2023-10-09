@@ -61,6 +61,7 @@ public class BurgerManager : MonoBehaviour
         
         highlightBox = GameObject.CreatePrimitive(PrimitiveType.Cube);
         Destroy(highlightBox.GetComponent<BoxCollider>());
+        highlightBox.name = "Highlighter";
         highlightBox.transform.parent = transform;
         highlightBox.transform.localScale = Vector3.one;
         highlightBoxRenderer = highlightBox.GetComponent<Renderer>();
