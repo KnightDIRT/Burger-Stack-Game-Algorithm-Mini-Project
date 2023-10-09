@@ -114,6 +114,8 @@ public class Burger : MonoBehaviour
             burgerPart.physical.transform.position = burgerPart.models[burgerPart.chosenModel].offset + Vector3.up * nextPartZOffset;
             nextPartZOffset += burgerPart.models[burgerPart.chosenModel].modelHeight + burgerPart.models[burgerPart.chosenModel].offset.y + extraOffset;
         }
+
+        burgerHeight = nextPartZOffset;
     }
 
     private void CreateAndRenderDebugBurger() //Include all burgerPartPrefabs
