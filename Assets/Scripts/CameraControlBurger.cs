@@ -16,6 +16,7 @@ public class CameraControlBurger : MonoBehaviour
     void LateUpdate()
     {
         transform.position += Vector3.up * Input.mouseScrollDelta.y;
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, minHeight, focusedBurger.burgerHeight), transform.position.z);
+        var maxHeight = Mathf.Max(minHeight, focusedBurger.burgerHeight);
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, minHeight, maxHeight), transform.position.z);
     }
 }
