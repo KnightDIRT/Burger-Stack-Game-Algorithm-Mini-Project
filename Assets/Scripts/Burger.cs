@@ -16,6 +16,8 @@ public class Burger : MonoBehaviour
 
     public List<BurgerPart> burgerParts;
 
+    public float burgerHeight;
+
     void Update()
     {
         if (debug)
@@ -99,6 +101,8 @@ public class Burger : MonoBehaviour
 
             nextPartZOffset += modelData.modelHeight + modelData.offset.y + extraOffset;
             index++;
+
+            burgerHeight = nextPartZOffset;
         }
     }
 
