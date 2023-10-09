@@ -10,11 +10,12 @@ using static BurgerManager;
 public class Burger : MonoBehaviour
 {
     [SerializeField] bool debug;
-    [SerializeField] bool update;
+    [SerializeField] bool update = true;
     [SerializeField] int burgerSize;
 
     public List<BurgerPart> burgerParts;
 
+    public bool readOnly;
     public float extraOffset;
     public float burgerHeight { get; private set; }
 
@@ -82,7 +83,7 @@ public class Burger : MonoBehaviour
             model.transform.localScale *= modelData.scale;
 
             //Add collider for dynamic parts
-            if (burgerPart.name != "Bun")
+            if (burgerPart.name != "Bun" && !readOnly)
             {
                 var collider = part.AddComponent<BoxCollider>();
                 collider.isTrigger = true;
