@@ -15,6 +15,7 @@ public class BurgerMenuUIManager : MonoBehaviour
 
     private TMP_Text text_PartCount;
     private Slider viewSlider;
+    private Slider offsetSlider;
 
     private void Start()
     {
@@ -40,8 +41,10 @@ public class BurgerMenuUIManager : MonoBehaviour
 
         text_PartCount = transform.Find("Part Count Text").GetComponent<TMP_Text>();
         viewSlider = transform.Find("View Slider").GetComponent<Slider>();
+        offsetSlider = transform.Find("Offset Slider").GetComponent<Slider>();
 
         viewSlider.onValueChanged.AddListener(delegate { UpdateSliderValue(); });
+        offsetSlider.onValueChanged.AddListener(delegate { UpdateOffsetValue(); });
     }
 
     private void LateUpdate()
@@ -53,5 +56,11 @@ public class BurgerMenuUIManager : MonoBehaviour
     private void UpdateSliderValue()
     {
         cameraController.viewSliderValue = viewSlider.value;
+    }
+
+    private void UpdateOffsetValue()
+    {
+        targetBurger.extraOffset = offsetSlider.value;
+        targetBurger.RegenerateBurger();
     }
 }

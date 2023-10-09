@@ -12,11 +12,11 @@ public class Burger : MonoBehaviour
     [SerializeField] bool debug;
     [SerializeField] bool update;
     [SerializeField] int burgerSize;
-    [SerializeField] float extraOffset;
 
     public List<BurgerPart> burgerParts;
 
-    public float burgerHeight;
+    public float extraOffset;
+    public float burgerHeight { get; private set; }
 
     void Update()
     {
@@ -55,7 +55,7 @@ public class Burger : MonoBehaviour
         burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[0]);
     }
 
-    public void RegenerateBurger() 
+    public void RegenerateBurger()
     {
         foreach (Transform child in transform) //Clear Burger
         {
