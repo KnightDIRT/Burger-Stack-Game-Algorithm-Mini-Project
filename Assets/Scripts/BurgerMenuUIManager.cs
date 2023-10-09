@@ -6,15 +6,20 @@ using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
 using static BurgerManager;
+using static UnityEditor.SceneView;
 
-public class BurgerMenuManager : MonoBehaviour
+public class BurgerMenuUIManager : MonoBehaviour
 {
-    [SerializeField] Burger targetBurger;
+    private Burger targetBurger;
+    private CameraControlBurger cameraController;
 
     private TMP_Text text_PartCount;
+    private Slider viewSlider;
 
     private void Start()
     {
+        targetBurger = transform.parent.GetComponent<CameraControlBurger>().focusedBurger;
+        cameraController = transform.parent.GetComponent<CameraControlBurger>();
         foreach (BurgerPart burgerPart in instanceBurgerManager.burgerPartPrefabs.Skip(2))
         {
             var iconUI = new GameObject();
@@ -34,10 +39,12 @@ public class BurgerMenuManager : MonoBehaviour
         }
 
         text_PartCount = transform.Find("Part Count Text").GetComponent<TMP_Text>();
+        viewSlider = transform.Find("View Slider").GetComponent<Slider>();
     }
 
     private void LateUpdate()
-    {
+    { 
         text_PartCount.text = (targetBurger.burgerParts.Count - 2).ToString();
+        viewSlider.value = cameraController.viewSliderValue;
     }
 }

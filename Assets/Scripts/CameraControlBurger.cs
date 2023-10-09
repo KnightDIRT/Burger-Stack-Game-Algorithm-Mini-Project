@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class CameraControlBurger : MonoBehaviour
 {
+    [SerializeField] private float sensitivity = 0.1f;
+
     public Burger focusedBurger;
 
-    float minHeight;
+    [HideInInspector] public float viewSliderValue = 1f;
+
+    private float minHeight;
 
     private void Awake()
     {
@@ -15,8 +19,10 @@ public class CameraControlBurger : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.position += Vector3.up * Input.mouseScrollDelta.y;
-        var maxHeight = Mathf.Max(minHeight, focusedBurger.burgerHeight);
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, minHeight, maxHeight), transform.position.z);
+        viewSliderValue += Input.GetAxis("Mouse ScrollWheel") * sensitivity;
+        viewSliderValue = Mathf.Clamp01(viewSliderValue);
+        var maxHeight = Mathf.Max(minHeight, focusedBurger.burgerHeight - GetComponent<Camera>().orthographicSize/2);
+        var currentViewHeight = viewSliderValue * (maxHeight - minHeight) + minHeight;
+        transform.position = new Vector3(transform.position.x, currentViewHeight, transform.position.z);
     }
 }
