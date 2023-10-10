@@ -525,6 +525,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e8102af8f473a48aac016a788456f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultMaxScore: 1000
+  defaultInOrderMultiplier: 2
   burgerPartPrefabs: []
   inspectorAssignedBurgerPartPrefabs:
   - name: Cheese
@@ -697,8 +699,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   compare: 0
-  burger1: {fileID: 623924651}
-  burger2: {fileID: 2067827917}
+  burger1: {fileID: 2067827917}
+  burger2: {fileID: 623924651}
 --- !u!1 &287973755
 GameObject:
   m_ObjectHideFlags: 0

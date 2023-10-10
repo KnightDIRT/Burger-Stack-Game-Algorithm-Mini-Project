@@ -8,6 +8,9 @@ using UnityEngine.UIElements;
 
 public class BurgerManager : MonoBehaviour
 {
+    [SerializeField] float defaultMaxScore = 1000f;
+    [SerializeField] float defaultInOrderMultiplier = 2f;
+
     public static BurgerManager instanceBurgerManager;
 
     private GameObject highlightBox;
@@ -109,28 +112,34 @@ public class BurgerManager : MonoBehaviour
         highlightBox.transform.localScale = collider.size;
     }
 
-    public int CompareBurger(Burger burger1, Burger burger2) //-1 is perfect match; >=0 is number different part
+    public float[] CompareBurger(Burger burgerRef, Burger burger, float maxScore = -1, float inOrderMultiplier = -1) 
     {
+        //[0] Score
+        //[1] -1 is perfect match; >=0 is number different part
+        if (maxScore == -1) maxScore = defaultMaxScore;
+        if (inOrderMultiplier == -1) inOrderMultiplier = defaultInOrderMultiplier;
+
         Dictionary<string, int> burgerCount = new Dictionary<string, int>();
         foreach(BurgerPart partPrefab in burgerPartPrefabs.Skip(1))
         {
             burgerCount.Add(partPrefab.name, 0);
         }
 
-        bool isPerfectMatch = true;
+        bool isInOrder = true;
 
-        List<BurgerPart>[] burgerPartsList = new List<BurgerPart>[2] { burger1.burgerParts, burger2.burgerParts };
-        int len = Mathf.Max(burgerPartsList[0].Count, burgerPartsList[1].Count);
-        for(int i = 0; i < len; i++)
+        List<BurgerPart>[] burgerPartsList = new List<BurgerPart>[2] { burgerRef.burgerParts, burger.burgerParts };
+        int maxCount = Mathf.Max(burgerPartsList[0].Count, burgerPartsList[1].Count);
+        for(int i = 0; i < maxCount; i++)
         {
             if (i < burgerPartsList[0].Count) burgerCount[burgerPartsList[0][i].name]++;
-            else isPerfectMatch = false;
+            else isInOrder = false;
             if (i < burgerPartsList[1].Count) burgerCount[burgerPartsList[1][i].name]--;
-            else isPerfectMatch = false;
-            if (isPerfectMatch && burgerPartsList[0][i].name != burgerPartsList[1][i].name) isPerfectMatch = false;
+            else isInOrder = false;
+            if (isInOrder && burgerPartsList[0][i].name != burgerPartsList[1][i].name) isInOrder = false;
         }
 
-        if (isPerfectMatch) return -1;
-        return (burgerCount.Sum(x => Mathf.Abs(x.Value)) + Mathf.Abs(burgerPartsList[0].Count - burgerPartsList[1].Count)) / 2;
-    }   
+        if (isInOrder) return new float[2] { maxScore * inOrderMultiplier, -1 };
+        float wrongCount = (burgerCount.Sum(x => Mathf.Abs(x.Value)) + Mathf.Abs(burgerPartsList[0].Count - burgerPartsList[1].Count)) / 2;
+        return new float[2] { maxScore * Mathf.Max(1f - wrongCount / (burgerPartsList[0].Count - 2), 0), wrongCount};
+    }
 }
