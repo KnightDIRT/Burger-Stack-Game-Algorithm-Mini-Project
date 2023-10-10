@@ -1537,7 +1537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   update: 1
-  burgerSize: 10
+  burgerSize: 5
   burgerParts: []
   readOnly: 0
   extraOffset: 0.05
@@ -2938,7 +2938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   update: 1
-  burgerSize: 10
+  burgerSize: 5
   burgerParts: []
   readOnly: 0
   extraOffset: 0.1
