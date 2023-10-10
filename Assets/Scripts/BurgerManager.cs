@@ -109,24 +109,28 @@ public class BurgerManager : MonoBehaviour
         highlightBox.transform.localScale = collider.size;
     }
 
-    public int[] CompareBurger(Burger burger1, Burger burger2) 
+    public int CompareBurger(Burger burger1, Burger burger2) //-1 is perfect match; >=0 is number different part
     {
-        //[0]: 0 is perfect match, >0 is number mismatch
-        //[1]: 0 is same count, >0 is number count mismatch
-        int missMatch = 0;
         Dictionary<string, int> burgerCount = new Dictionary<string, int>();
         foreach(BurgerPart partPrefab in burgerPartPrefabs.Skip(1))
         {
             burgerCount.Add(partPrefab.name, 0);
         }
 
-        int len = Mathf.Max(burger1.burgerParts.Count, burger2.burgerParts.Count);
+        bool isPerfectMatch = true;
+
+        List<BurgerPart>[] burgerPartsList = new List<BurgerPart>[2] { burger1.burgerParts, burger2.burgerParts };
+        int len = Mathf.Max(burgerPartsList[0].Count, burgerPartsList[1].Count);
         for(int i = 0; i < len; i++)
         {
-            burgerCount[burger1.burgerParts[i].name]++;
-            burgerCount[burger2.burgerParts[i].name]--;
-            if (burger1.burgerParts[i].name != burger2.burgerParts[i].name) missMatch++;
+            if (i < burgerPartsList[0].Count) burgerCount[burgerPartsList[0][i].name]++;
+            else isPerfectMatch = false;
+            if (i < burgerPartsList[1].Count) burgerCount[burgerPartsList[1][i].name]--;
+            else isPerfectMatch = false;
+            if (isPerfectMatch && burgerPartsList[0][i].name != burgerPartsList[1][i].name) isPerfectMatch = false;
         }
-        return new int[2] { missMatch, burgerCount.Sum(x => Mathf.Abs(x.Value)) };
+
+        if (isPerfectMatch) return -1;
+        return (burgerCount.Sum(x => Mathf.Abs(x.Value)) + Mathf.Abs(burgerPartsList[0].Count - burgerPartsList[1].Count)) / 2;
     }   
 }

@@ -13,8 +13,7 @@ public class CompareTest : MonoBehaviour
     {
         if (compare)
         {
-            var output = instanceBurgerManager.CompareBurger(burger1, burger2);
-            Debug.Log(string.Format("Mismatch: {0}\nCount Mismatch: {1}", output[0].ToString(), output[1].ToString()));
+            Debug.Log(string.Format("Mismatch: {0}", instanceBurgerManager.CompareBurger(burger1, burger2).ToString()));
 
             compare = false;
         }
