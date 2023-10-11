@@ -21,7 +21,7 @@ public class BurgerMenuUIManager : MonoBehaviour
     {
         targetBurger = transform.parent.GetComponent<CameraControlBurger>().focusedBurger;
         cameraController = transform.parent.GetComponent<CameraControlBurger>();
-        foreach (BurgerPart burgerPart in instanceBurgerManager.burgerPartPrefabs.Skip(2))
+        foreach (BurgerPart burgerPart in BurgerManagerInstance.burgerPartPrefabs.Skip(2))
         {
             var iconUI = new GameObject();
             iconUI.name = burgerPart.name;

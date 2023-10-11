@@ -45,15 +45,15 @@ public class Burger : MonoBehaviour
     private void CreateRandomBurger(int size)
     {
         burgerParts.Clear();
-        burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[1].Clone());
+        burgerParts.Add(BurgerManagerInstance.burgerPartPrefabs[1].Clone());
         for (int i = 0; i < size; i++)
         {
-            int index = UnityEngine.Random.Range(2, instanceBurgerManager.burgerPartPrefabs.Count);
-            var part = instanceBurgerManager.burgerPartPrefabs[index];
+            int index = UnityEngine.Random.Range(2, BurgerManagerInstance.burgerPartPrefabs.Count);
+            var part = BurgerManagerInstance.burgerPartPrefabs[index];
             part.chosenModel = UnityEngine.Random.Range(0, part.models.Count);
             burgerParts.Add(part.Clone());
         }
-        burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[0].Clone());
+        burgerParts.Add(BurgerManagerInstance.burgerPartPrefabs[0].Clone());
     }
 
     public void RegenerateBurger()
@@ -124,11 +124,11 @@ public class Burger : MonoBehaviour
     {
         //CREATE
         burgerParts.Clear();
-        foreach (BurgerPart burgerPart in instanceBurgerManager.burgerPartPrefabs.Skip(1))
+        foreach (BurgerPart burgerPart in BurgerManagerInstance.burgerPartPrefabs.Skip(1))
         {
             burgerParts.Add(burgerPart);
         }
-        burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[0]);
+        burgerParts.Add(BurgerManagerInstance.burgerPartPrefabs[0]);
 
         //RENDER
         foreach (Transform child in transform) //Clear Burger

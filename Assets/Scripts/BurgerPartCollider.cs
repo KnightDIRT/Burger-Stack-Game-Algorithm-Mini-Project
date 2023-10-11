@@ -10,12 +10,12 @@ public class BurgerPartCollider : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if(Input.GetMouseButton(0)) instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 2);
-        else instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 1);
+        if(Input.GetMouseButton(0)) BurgerManagerInstance.HighlightBurgerPart(burger.burgerParts[index], 2);
+        else BurgerManagerInstance.HighlightBurgerPart(burger.burgerParts[index], 1);
 
         if (Input.GetMouseButtonDown(1))
         {
-            instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 0);
+            BurgerManagerInstance.HighlightBurgerPart(burger.burgerParts[index], 0);
             burger.burgerParts.RemoveAt(index);
             burger.RegenerateBurger();
         }
@@ -23,7 +23,7 @@ public class BurgerPartCollider : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 2);
+        BurgerManagerInstance.HighlightBurgerPart(burger.burgerParts[index], 2);
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -45,11 +45,11 @@ public class BurgerPartCollider : MonoBehaviour
 
     private void OnMouseExit()
     {
-        instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 0);
+        BurgerManagerInstance.HighlightBurgerPart(burger.burgerParts[index], 0);
     }
 
     private void OnMouseUp()
     {
-        instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 0);
+        BurgerManagerInstance.HighlightBurgerPart(burger.burgerParts[index], 0);
     }
 }

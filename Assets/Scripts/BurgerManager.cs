@@ -11,7 +11,7 @@ public class BurgerManager : MonoBehaviour
     [SerializeField] float defaultMaxScore = 1000f;
     [SerializeField] float defaultInOrderMultiplier = 2f;
 
-    public static BurgerManager instanceBurgerManager;
+    public static BurgerManager BurgerManagerInstance;
 
     private GameObject highlightBox;
     private Renderer highlightBoxRenderer;
@@ -53,13 +53,13 @@ public class BurgerManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instanceBurgerManager != null && instanceBurgerManager != this)
+        if (BurgerManagerInstance != null && BurgerManagerInstance != this)
         {
             Destroy(this);
         }
         else
         {
-            instanceBurgerManager = this;
+            BurgerManagerInstance = this;
         }
         
         highlightBox = GameObject.CreatePrimitive(PrimitiveType.Cube);

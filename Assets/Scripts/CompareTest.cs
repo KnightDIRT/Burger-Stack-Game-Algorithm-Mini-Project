@@ -23,7 +23,7 @@ public class CompareTest : MonoBehaviour
 
     public void ShowCompareResult()
     {
-        var compareOutput = instanceBurgerManager.CompareBurger(burger1, burger2);
+        var compareOutput = BurgerManagerInstance.CompareBurger(burger1, burger2);
         Debug.Log(string.Format("Score: {0}\nIncorrect: {1}", compareOutput[0].ToString(), compareOutput[1].ToString()));
     }
 }
