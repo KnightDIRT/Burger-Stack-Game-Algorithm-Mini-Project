@@ -15,10 +15,15 @@ public class CompareTest : MonoBehaviour
     {
         if (compare)
         {
-            var incorrectNum = instanceBurgerManager.CompareBurger(burger1, burger2);
-            Debug.Log(string.Format("Score: {0}\nIncorrect: {1}", incorrectNum[0].ToString(), incorrectNum[1].ToString()));
+            ShowCompareResult();
 
             compare = false;
         }
+    }
+
+    public void ShowCompareResult()
+    {
+        var compareOutput = instanceBurgerManager.CompareBurger(burger1, burger2);
+        Debug.Log(string.Format("Score: {0}\nIncorrect: {1}", compareOutput[0].ToString(), compareOutput[1].ToString()));
     }
 }
