@@ -409,6 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   update: 1
   burgerSize: 10
+  extraOffset: 0
   burgerParts: []
 --- !u!4 &623924652
 Transform:
@@ -655,31 +656,26 @@ MonoBehaviour:
     modelHeight: 0.004
     offset: {x: 0, y: 0.02, z: 0}
     scale: 0.06666667
-    physical: {fileID: 0}
   - name: Steak
     model: {fileID: 919132149155446097, guid: 31dabdc55e3c84f47a19fd2411be8a81, type: 3}
     modelHeight: 0.011
     offset: {x: 0, y: 0.035, z: 0}
     scale: 0.06666667
-    physical: {fileID: 0}
   - name: Steak
     model: {fileID: 919132149155446097, guid: 1283d22ea97bf00469bc76c6a611e1ae, type: 3}
     modelHeight: 0.011
     offset: {x: 0, y: 0.035, z: 0}
     scale: 0.06666667
-    physical: {fileID: 0}
   - name: Steak
     model: {fileID: 919132149155446097, guid: 7fa54cd995c48474090d73f2f45b22e2, type: 3}
     modelHeight: 0.011
     offset: {x: 0, y: 0.035, z: 0}
     scale: 0.06666667
-    physical: {fileID: 0}
   - name: Fish
     model: {fileID: 6675869405757146761, guid: 8702539775f89aa4dba42986f9bee52b, type: 3}
     modelHeight: 0.03
     offset: {x: 0.05, y: 0.03, z: 0}
     scale: 1
-    physical: {fileID: 0}
 --- !u!4 &1530521618
 Transform:
   m_ObjectHideFlags: 0
