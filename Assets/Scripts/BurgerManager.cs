@@ -48,7 +48,8 @@ public class BurgerManager : MonoBehaviour
         }
     }
 
-    [HideInInspector] public List<BurgerPart> burgerPartPrefabs = new List<BurgerPart>(); //0 is top bun, 1 is bottom bun
+    [HideInInspector] public List<BurgerPart> burgerPartPrefabs = new List<BurgerPart>(); 
+    [HideInInspector] public List<BurgerPart> burgerPartPrefabsAll = new List<BurgerPart>(); //0 is top bun, 1 is bottom bun
     [SerializeField] private List<BurgerPart> inspectorAssignedBurgerPartPrefabs;
 
     public Dictionary<string, int> burgerCountDict { get; private set; }
@@ -81,7 +82,7 @@ public class BurgerManager : MonoBehaviour
         topModel.offset = new Vector3(1f, 2.2f, 0.5f) / 15f;
         topModel.scale = 1 / 15f;
         topBun.models.Add(topModel);
-        burgerPartPrefabs.Add(topBun);
+        burgerPartPrefabsAll.Add(topBun);
         BurgerPart bottomBun = new BurgerPart();
         bottomBun.name = "Bun";
         BurgerModel bottomModel = new BurgerModel();
@@ -89,11 +90,11 @@ public class BurgerManager : MonoBehaviour
         bottomModel.modelHeight = 1.1f / 15f;
         bottomModel.scale = 1 / 15f;
         bottomBun.models.Add(bottomModel);
-        burgerPartPrefabs.Add(bottomBun);
-        burgerPartPrefabs.AddRange(inspectorAssignedBurgerPartPrefabs);
+        burgerPartPrefabsAll.Add(bottomBun);
+        burgerPartPrefabsAll.AddRange(inspectorAssignedBurgerPartPrefabs);
 
         burgerCountDict = new Dictionary<string, int>();
-        foreach (BurgerPart partPrefab in burgerPartPrefabs.Skip(1))
+        foreach (BurgerPart partPrefab in burgerPartPrefabsAll.Skip(1))
         {
             burgerCountDict.Add(partPrefab.name, 0);
         }

@@ -30,6 +30,8 @@ public class Burger : MonoBehaviour
         {
             if (update)
             {
+                BurgerManagerInstance.burgerPartPrefabs.Clear();
+                BurgerManagerInstance.burgerPartPrefabs.AddRange(BurgerManagerInstance.burgerPartPrefabsAll);
                 CreateRandomBurger(burgerSize);
                 RegenerateBurger();
                 update = false;
@@ -126,7 +128,7 @@ public class Burger : MonoBehaviour
     {
         //CREATE
         burgerParts.Clear();
-        foreach (BurgerPart burgerPart in BurgerManagerInstance.burgerPartPrefabs.Skip(1))
+        foreach (BurgerPart burgerPart in BurgerManagerInstance.burgerPartPrefabsAll.Skip(1))
         {
             burgerParts.Add(burgerPart);
         }

@@ -86,6 +86,14 @@ public class GameManager : MonoBehaviour
                 var compareOutput = BurgerManagerInstance.CompareBurger(orderBurger, inputBurger);
                 totalScore += compareOutput[0];
 
+                BurgerManagerInstance.burgerPartPrefabs.Clear();
+                int typeCount = 2 + (currentLevel < 4 ? currentLevel : Mathf.FloorToInt((currentLevel - 3) / 2.4f) + 3); //difficulty curve in green https://www.desmos.com/calculator/yxpydnaqui
+                typeCount = Mathf.Min(typeCount, BurgerManagerInstance.burgerPartPrefabsAll.Count);
+                for (int i = 0; i < typeCount; i++)
+                {
+                    BurgerManagerInstance.burgerPartPrefabs.Add(BurgerManagerInstance.burgerPartPrefabsAll[i]);
+                }
+                
                 partCount = (int)(1.5f * Mathf.Sqrt(currentLevel)) + (currentLevel > 50 ? (currentLevel - 50) * (currentLevel - 50) : 0); //difficulty curve in blue https://www.desmos.com/calculator/yxpydnaqui
                 orderBurger.CreateRandomBurger(partCount);
                 orderBurger.RegenerateBurger();
