@@ -10,8 +10,9 @@ using static BurgerManager;
 public class Burger : MonoBehaviour
 {
     [SerializeField] bool debug;
-    [SerializeField] bool update = true;
-    [SerializeField] int burgerSize;
+
+    public bool update = true;
+    public int burgerSize;
 
     public List<BurgerPart> burgerParts;
 
@@ -60,7 +61,7 @@ public class Burger : MonoBehaviour
     {
         foreach (Transform child in transform) //Clear Burger
         {
-            Destroy(child.gameObject);
+            if (child.tag == "BurgerPart") Destroy(child.gameObject);
         }
 
         int index = 0;
@@ -73,6 +74,7 @@ public class Burger : MonoBehaviour
             //Create part as empty
             part = new GameObject();
             part.name = burgerPart.name;
+            part.tag = "BurgerPart";
             part.transform.parent = transform;
             part.transform.localPosition = modelData.offset + Vector3.up * nextPartZOffset;
 
