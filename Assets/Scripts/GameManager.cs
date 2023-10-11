@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
                 var compareOutput = BurgerManagerInstance.CompareBurger(orderBurger, inputBurger);
                 totalScore += compareOutput[0];
 
-                partCount = (int)Mathf.Pow(currentLevel, 0.8f) + (currentLevel > 100 ? (int)Mathf.Pow(currentLevel - 100, 2) : 0);
+                partCount = (int)(1.5f * Mathf.Sqrt(currentLevel)) + (currentLevel > 50 ? (currentLevel - 50) * (currentLevel - 50) : 0); //difficulty curve in blue https://www.desmos.com/calculator/yxpydnaqui
                 orderBurger.CreateRandomBurger(partCount);
                 orderBurger.RegenerateBurger();
                 cameraControlBurger.targetBurger = orderBurger;
