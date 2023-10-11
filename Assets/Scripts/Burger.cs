@@ -45,7 +45,7 @@ public class Burger : MonoBehaviour
     private void CreateRandomBurger(int size)
     {
         burgerParts.Clear();
-        burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[1]);
+        burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[1].Clone());
         for (int i = 0; i < size; i++)
         {
             int index = UnityEngine.Random.Range(2, instanceBurgerManager.burgerPartPrefabs.Count);
@@ -53,7 +53,7 @@ public class Burger : MonoBehaviour
             part.chosenModel = UnityEngine.Random.Range(0, part.models.Count);
             burgerParts.Add(part.Clone());
         }
-        burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[0]);
+        burgerParts.Add(instanceBurgerManager.burgerPartPrefabs[0].Clone());
     }
 
     public void RegenerateBurger()
