@@ -15,7 +15,7 @@ public class Burger : MonoBehaviour
 
     public List<BurgerPart> burgerParts;
 
-    public bool readOnly;
+    public bool isReadOnly;
     public float extraOffset;
     public float burgerHeight { get; private set; }
 
@@ -83,7 +83,7 @@ public class Burger : MonoBehaviour
             model.transform.localScale *= modelData.scale;
 
             //Add collider for dynamic parts
-            if (burgerPart.name != "Bun" && !readOnly)
+            if (burgerPart.name != "Bun" && !isReadOnly)
             {
                 var collider = part.AddComponent<BoxCollider>();
                 collider.isTrigger = true;

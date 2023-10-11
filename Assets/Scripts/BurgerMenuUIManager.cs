@@ -10,17 +10,29 @@ using static UnityEditor.SceneView;
 
 public class BurgerMenuUIManager : MonoBehaviour
 {
-    private Burger targetBurger;
     private CameraControlBurger cameraController;
+    private Burger targetBurger;
 
     private TMP_Text text_PartCount;
     private Slider viewSlider;
     private Slider offsetSlider;
 
+    private bool isReadOnly;
+
     private void Start()
     {
-        targetBurger = transform.parent.GetComponent<CameraControlBurger>().focusedBurger;
         cameraController = transform.parent.GetComponent<CameraControlBurger>();
+        targetBurger = cameraController.focusedBurger;
+        isReadOnly = targetBurger.isReadOnly;
+
+        text_PartCount = transform.Find("Part Count Text").GetComponent<TMP_Text>();
+        viewSlider = transform.Find("View Slider").GetComponent<Slider>();
+        offsetSlider = transform.Find("Offset Slider").GetComponent<Slider>();
+
+        viewSlider.onValueChanged.AddListener(delegate { UpdateSliderValue(); });
+        offsetSlider.onValueChanged.AddListener(delegate { UpdateOffsetValue(); });
+
+        if (isReadOnly) return;
         foreach (BurgerPart burgerPart in BurgerManagerInstance.burgerPartPrefabs.Skip(2))
         {
             var iconUI = new GameObject();
@@ -38,13 +50,6 @@ public class BurgerMenuUIManager : MonoBehaviour
             iconCode.burgerPartPrefab = burgerPart;
             iconCode.button = iconUI.AddComponent<Button>();
         }
-
-        text_PartCount = transform.Find("Part Count Text").GetComponent<TMP_Text>();
-        viewSlider = transform.Find("View Slider").GetComponent<Slider>();
-        offsetSlider = transform.Find("Offset Slider").GetComponent<Slider>();
-
-        viewSlider.onValueChanged.AddListener(delegate { UpdateSliderValue(); });
-        offsetSlider.onValueChanged.AddListener(delegate { UpdateOffsetValue(); });
     }
 
     private void LateUpdate()
