@@ -1,30 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static BurgerManager;
 
-[RequireComponent(typeof(BoxCollider))]
 public class BurgerPartCollider : MonoBehaviour
 {
-    private float dragOutThreshold = 300f;
-
     public Burger burger;
     public int index;
-    public float extraOffset;
 
-    private Vector3 initialMousePos;
-
-    private void Awake()
+    private void OnMouseOver()
     {
-     
+        if(Input.GetMouseButton(0)) instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 2);
+        else instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 1);
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 0);
+            burger.burgerParts.RemoveAt(index);
+            burger.RegenerateBurger();
+        }
     }
 
-    private void OnMouseDown()
-    {
-        initialMousePos = Input.mousePosition;
-    }
-    
     private void OnMouseDrag()
     {
+        instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 2);
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -36,14 +35,21 @@ public class BurgerPartCollider : MonoBehaviour
                 var temp = burger.burgerParts[index];
                 burger.burgerParts[index] = burger.burgerParts[swapIndex];
                 burger.burgerParts[swapIndex] = temp;
-                burger.RegenerateBurger(extraOffset);
+                var tempIndex = index;
+                index = swapIndex;
+                swapIndex = tempIndex;
+                burger.ReRenderBurger();
             }
         }
+    }
 
-        if(Vector3.Distance(initialMousePos, Input.mousePosition) >= dragOutThreshold)
-        {
-            burger.burgerParts.RemoveAt(index);
-            burger.RegenerateBurger(extraOffset);
-        }
+    private void OnMouseExit()
+    {
+        instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 0);
+    }
+
+    private void OnMouseUp()
+    {
+        instanceBurgerManager.HighlightBurgerPart(burger.burgerParts[index], 0);
     }
 }
