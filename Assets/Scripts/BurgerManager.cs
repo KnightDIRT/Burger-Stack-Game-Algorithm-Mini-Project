@@ -49,8 +49,10 @@ public class BurgerManager : MonoBehaviour
     }
 
     [HideInInspector] public List<BurgerPart> burgerPartPrefabs = new List<BurgerPart>(); //0 is top bun, 1 is bottom bun
-    [SerializeField] private List<BurgerPart> inspectorAssignedBurgerPartPrefabs; 
+    [SerializeField] private List<BurgerPart> inspectorAssignedBurgerPartPrefabs;
 
+    public Dictionary<string, int> burgerCountDict { get; private set; }
+        
     private void Awake()
     {
         if (BurgerManagerInstance != null && BurgerManagerInstance != this)
@@ -89,6 +91,12 @@ public class BurgerManager : MonoBehaviour
         bottomBun.models.Add(bottomModel);
         burgerPartPrefabs.Add(bottomBun);
         burgerPartPrefabs.AddRange(inspectorAssignedBurgerPartPrefabs);
+
+        burgerCountDict = new Dictionary<string, int>();
+        foreach (BurgerPart partPrefab in burgerPartPrefabs.Skip(1))
+        {
+            burgerCountDict.Add(partPrefab.name, 0);
+        }
     }
 
     public void HighlightBurgerPart(BurgerPart part, int mode) //0 = hide, 1 = over, 2 = drag
@@ -119,11 +127,7 @@ public class BurgerManager : MonoBehaviour
         if (maxScore == -1) maxScore = defaultMaxScore;
         if (inOrderMultiplier == -1) inOrderMultiplier = defaultInOrderMultiplier;
 
-        Dictionary<string, int> burgerCount = new Dictionary<string, int>();
-        foreach(BurgerPart partPrefab in burgerPartPrefabs.Skip(1))
-        {
-            burgerCount.Add(partPrefab.name, 0);
-        }
+        Dictionary<string, int> burgerCount = burgerCountDict.ToDictionary(entry => entry.Key, entry => entry.Value);
 
         bool isInOrder = true;
 
