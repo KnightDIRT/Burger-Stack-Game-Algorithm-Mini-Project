@@ -43,7 +43,7 @@ public class Burger : MonoBehaviour
         burgerParts.Insert(burgerParts.Count - 1, burgerPart.Clone());
     }
 
-    private void CreateRandomBurger(int size)
+    public void CreateRandomBurger(int size)
     {
         burgerParts.Clear();
         burgerParts.Add(BurgerManagerInstance.burgerPartPrefabs[1].Clone());

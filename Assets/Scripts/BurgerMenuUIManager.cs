@@ -39,7 +39,7 @@ public class BurgerMenuUIManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        targetBurger = cameraController.focusedBurger;
+        targetBurger = cameraController.targetBurger;
         if (targetBurger != lastBurger)
         {
             lastBurger = targetBurger;

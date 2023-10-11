@@ -6,7 +6,7 @@ public class CameraControlBurger : MonoBehaviour
 {
     [SerializeField] private float sensitivity = 0.1f;
 
-    public Burger focusedBurger;
+    public Burger targetBurger;
 
     [HideInInspector] public float viewSliderValue = 1f;
 
@@ -21,7 +21,7 @@ public class CameraControlBurger : MonoBehaviour
     {
         viewSliderValue += Input.GetAxis("Mouse ScrollWheel") * sensitivity;
         viewSliderValue = Mathf.Clamp01(viewSliderValue);
-        var maxHeight = Mathf.Max(minHeight, focusedBurger.burgerHeight - GetComponent<Camera>().orthographicSize/2);
+        var maxHeight = Mathf.Max(minHeight, targetBurger.burgerHeight - GetComponent<Camera>().orthographicSize/2);
         var currentViewHeight = viewSliderValue * (maxHeight - minHeight) + minHeight;
         transform.position = new Vector3(transform.position.x, currentViewHeight, transform.position.z);
     }

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Fluid
+  - BurgerPart
   layers:
   - Default
   - TransparentFX

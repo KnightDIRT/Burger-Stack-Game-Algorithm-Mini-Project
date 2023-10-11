@@ -1,12 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using static BurgerManager;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public bool isShowingOrderBurger;
+    [SerializeField] CameraControlBurger cameraControlBurger;
+    [SerializeField] Burger orderBurger;
+    [SerializeField] Burger inputBurger;
+    [SerializeField] Button Button_NextState;
+    [SerializeField] TMP_Text Text_Display;
+
+    public float totalScore;
+    public int currentLevel;
+
+    private int partCount = 1;
+
+    enum state
+    {
+        ShowingOrder,
+        ShowingInput
+    }
+    private state currentState;
 
     private void Awake()
     {
@@ -17,6 +36,63 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
+        }
+
+        Button_NextState.onClick.AddListener(NextState);
+    }
+
+    private void Start()
+    {
+        currentState = state.ShowingInput;
+        NextState();
+        totalScore = 0;
+        currentLevel = 1;
+    }
+
+    private void Update()
+    {
+        switch (currentState) 
+        {
+            case state.ShowingOrder:
+                orderBurger.gameObject.SetActive(true);
+                inputBurger.gameObject.SetActive(false);
+                break;
+            case state.ShowingInput:
+                orderBurger.gameObject.SetActive(false);
+                inputBurger.gameObject.SetActive(true);
+                break;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        Text_Display.text = string.Format("SCORE: {0}\nLEVEL: {1}", totalScore, currentLevel);
+    }
+
+    public void NextState()
+    {
+        switch(currentState)
+        {
+            case state.ShowingOrder:
+                inputBurger.CreateRandomBurger(0);
+                inputBurger.RegenerateBurger();
+                cameraControlBurger.targetBurger = inputBurger;
+
+                currentState = state.ShowingInput;
+                break;
+            case state.ShowingInput:
+                currentLevel++;
+
+                var compareOutput = BurgerManagerInstance.CompareBurger(orderBurger, inputBurger);
+                totalScore += compareOutput[0];
+
+                partCount = (int)Mathf.Pow(currentLevel, 0.8f) + (currentLevel > 100 ? (int)Mathf.Pow(currentLevel - 100, 2) : 0);
+                orderBurger.CreateRandomBurger(partCount);
+                orderBurger.RegenerateBurger();
+                cameraControlBurger.targetBurger = orderBurger;
+
+                currentState = state.ShowingOrder;
+                break;
         }
     }
 }
