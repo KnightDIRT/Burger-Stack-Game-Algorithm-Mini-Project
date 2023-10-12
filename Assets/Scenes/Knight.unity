@@ -687,6 +687,7 @@ MonoBehaviour:
   Text_Display: {fileID: 1437775585}
   totalScore: 0
   currentLevel: 0
+  scoreLerpSpeed: 1000
 --- !u!4 &247073936
 Transform:
   m_ObjectHideFlags: 0

@@ -18,7 +18,10 @@ public class GameManager : MonoBehaviour
     public float totalScore;
     public int currentLevel;
 
-    private int partCount = 1;
+    private int partCount;
+
+    private float scoreLerpSpeed = 1000f;
+    private float displayScore;
 
     enum state
     {
@@ -51,7 +54,8 @@ public class GameManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        Text_Display.text = string.Format("SCORE: {0:F0}\nLEVEL: {1}", totalScore, currentLevel);
+        displayScore = Mathf.MoveTowards(displayScore, totalScore, Time.deltaTime * scoreLerpSpeed);
+        Text_Display.text = string.Format("SCORE: {0:F0}\nLEVEL: {1}", displayScore, currentLevel);
     }
 
     public void NextState()
