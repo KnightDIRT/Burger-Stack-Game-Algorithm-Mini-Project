@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
     {
         currentState = state.ShowingInput;
         NextState();
+        currentlerpTime = 0;
         totalScore = 0;
         currentLevel = 1;
     }
@@ -74,7 +75,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) audioSource.PlayOneShot(clickSound);
 
-        currentlerpTime -= Time.deltaTime;
+        if (currentlerpTime > 0) currentlerpTime -= Time.deltaTime;
 
         displayScore = Mathf.Lerp(displayScore, totalScore, 1 - currentlerpTime / lerpTime);
         Text_Display.text = string.Format("SCORE: {0:F0}\nLEVEL: {1}", displayScore, currentLevel);
