@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        Text_Display.text = string.Format("SCORE: {0}\nLEVEL: {1}", totalScore, currentLevel);
+        Text_Display.text = string.Format("SCORE: {0:F0}\nLEVEL: {1}", totalScore, currentLevel);
     }
 
     public void NextState()
