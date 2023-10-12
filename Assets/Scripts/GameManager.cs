@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public AudioSource audioSource;
     public AudioClip clickSound;
     public AudioClip deleteSound;
+    public AudioClip perfectScoreSound;
+    public AudioClip maxScoreSound;
+    public AudioClip scoreSound;
+    public AudioClip minScoreSound;
 
     [Header("Debug Display")]
     public float totalScore;
@@ -108,7 +112,7 @@ public class GameManager : MonoBehaviour
 
                 var compareOutput = BurgerManagerInstance.CompareBurger(orderBurger, inputBurger);
                 totalScore += compareOutput[0];
-                UpdateAddText(compareOutput[0]);
+                UpdateAddTextandSound(compareOutput[0]);
 
                 BurgerManagerInstance.burgerPartPrefabs.Clear();
                 int typeCount = 2 + (currentLevel < 4 ? currentLevel : Mathf.FloorToInt((currentLevel - 3) / 2.4f) + 3); //difficulty curve in green https://www.desmos.com/calculator/yxpydnaqui
@@ -130,15 +134,21 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        void UpdateAddText(float scoreOut)
+        void UpdateAddTextandSound(float scoreOut)
         {  
             if (scoreOut == maxScore * inOrderMultiplier)
             {
                 Text_Add.color = Color.yellow;
+
+                audioSource.PlayOneShot(perfectScoreSound);
             }
             else
             {
                 Text_Add.color = Color.Lerp(Color.red, Color.green, scoreOut / maxScore);
+
+                if (scoreOut == maxScore) audioSource.PlayOneShot(maxScoreSound);
+                else if (scoreOut < maxScore / 4f) audioSource.PlayOneShot(minScoreSound);
+                else audioSource.PlayOneShot(scoreSound);
             }
             Text_Add.text = "+" + scoreOut.ToString();
         }
