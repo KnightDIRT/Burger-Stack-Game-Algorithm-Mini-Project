@@ -8,9 +8,6 @@ using UnityEngine.UIElements;
 
 public class BurgerManager : MonoBehaviour
 {
-    [SerializeField] float defaultMaxScore = 1000f;
-    [SerializeField] float defaultInOrderMultiplier = 2f;
-
     public static BurgerManager BurgerManagerInstance;
 
     private GameObject highlightBox;
@@ -125,8 +122,8 @@ public class BurgerManager : MonoBehaviour
     {
         //[0] Score
         //[1] -1 is perfect match; >=0 is number different part
-        if (maxScore == -1) maxScore = defaultMaxScore;
-        if (inOrderMultiplier == -1) inOrderMultiplier = defaultInOrderMultiplier;
+        if (maxScore == -1) maxScore = GameManager.Instance.maxScore;
+        if (inOrderMultiplier == -1) inOrderMultiplier = GameManager.Instance.inOrderMultiplier;
 
         Dictionary<string, int> burgerCount = burgerCountDict.ToDictionary(entry => entry.Key, entry => entry.Value);
 

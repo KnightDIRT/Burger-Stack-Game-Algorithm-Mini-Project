@@ -9,18 +9,25 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public float maxScore { get; private set; }
+    private float maxScore_p = 1000f;
+    public float inOrderMultiplier { get; private set; }
+    private float inOrderMultiplier_p = 2f;
+
     [SerializeField] CameraControlBurger cameraControlBurger;
     [SerializeField] Burger orderBurger;
     [SerializeField] Burger inputBurger;
     [SerializeField] Button Button_NextState;
     [SerializeField] TMP_Text Text_Display;
+    [SerializeField] TMP_Text Text_Add;
 
     public float totalScore;
     public int currentLevel;
 
     private int partCount;
 
-    private float scoreLerpSpeed = 1000f;
+    private float lerpTime = 1f;
+    private float currentlerpTime;
     private float displayScore;
 
     enum state
@@ -41,6 +48,9 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
+        maxScore = maxScore_p;
+        inOrderMultiplier = inOrderMultiplier_p;
+
         Button_NextState.onClick.AddListener(NextState);
     }
 
@@ -54,8 +64,14 @@ public class GameManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        displayScore = Mathf.MoveTowards(displayScore, totalScore, Time.deltaTime * scoreLerpSpeed);
+        currentlerpTime -= Time.deltaTime;
+
+        displayScore = Mathf.Lerp(displayScore, totalScore, 1 - currentlerpTime / lerpTime);
         Text_Display.text = string.Format("SCORE: {0:F0}\nLEVEL: {1}", displayScore, currentLevel);
+
+        Color color = Text_Add.color;
+        color.a = currentlerpTime / lerpTime;
+        Text_Add.color = color;
     }
 
     public void NextState()
@@ -77,9 +93,11 @@ public class GameManager : MonoBehaviour
             case state.ShowingInput:
                 currentState = state.ShowingOrder;
                 currentLevel++;
+                currentlerpTime = lerpTime;
 
                 var compareOutput = BurgerManagerInstance.CompareBurger(orderBurger, inputBurger);
                 totalScore += compareOutput[0];
+                UpdateAddText(compareOutput[0]);
 
                 BurgerManagerInstance.burgerPartPrefabs.Clear();
                 int typeCount = 2 + (currentLevel < 4 ? currentLevel : Mathf.FloorToInt((currentLevel - 3) / 2.4f) + 3); //difficulty curve in green https://www.desmos.com/calculator/yxpydnaqui
@@ -99,6 +117,19 @@ public class GameManager : MonoBehaviour
 
                 Button_NextState.transform.GetComponentInChildren<TMP_Text>().text = "OK";
                 break;
+        }
+
+        void UpdateAddText(float scoreOut)
+        {  
+            if (scoreOut == maxScore * inOrderMultiplier)
+            {
+                Text_Add.color = Color.yellow;
+            }
+            else
+            {
+                Text_Add.color = Color.Lerp(Color.red, Color.green, scoreOut / maxScore);
+            }
+            Text_Add.text = "+" + scoreOut.ToString();
         }
     }
 }
