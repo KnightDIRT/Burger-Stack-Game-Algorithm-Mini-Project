@@ -49,21 +49,6 @@ public class GameManager : MonoBehaviour
         currentLevel = 1;
     }
 
-    private void Update()
-    {
-        switch (currentState) 
-        {
-            case state.ShowingOrder:
-                orderBurger.gameObject.SetActive(true);
-                inputBurger.gameObject.SetActive(false);
-                break;
-            case state.ShowingInput:
-                orderBurger.gameObject.SetActive(false);
-                inputBurger.gameObject.SetActive(true);
-                break;
-        }
-    }
-
     private void LateUpdate()
     {
         Text_Display.text = string.Format("SCORE: {0:F0}\nLEVEL: {1}", totalScore, currentLevel);
@@ -74,13 +59,19 @@ public class GameManager : MonoBehaviour
         switch(currentState)
         {
             case state.ShowingOrder:
+                currentState = state.ShowingInput;
+
                 inputBurger.CreateRandomBurger(0);
                 inputBurger.RegenerateBurger();
                 cameraControlBurger.targetBurger = inputBurger;
 
-                currentState = state.ShowingInput;
+                orderBurger.gameObject.SetActive(false);
+                inputBurger.gameObject.SetActive(true);
+
+                Button_NextState.transform.GetComponentInChildren<TMP_Text>().text = "DONE";
                 break;
             case state.ShowingInput:
+                currentState = state.ShowingOrder;
                 currentLevel++;
 
                 var compareOutput = BurgerManagerInstance.CompareBurger(orderBurger, inputBurger);
@@ -99,7 +90,10 @@ public class GameManager : MonoBehaviour
                 orderBurger.RegenerateBurger();
                 cameraControlBurger.targetBurger = orderBurger;
 
-                currentState = state.ShowingOrder;
+                orderBurger.gameObject.SetActive(true);
+                inputBurger.gameObject.SetActive(false);
+
+                Button_NextState.transform.GetComponentInChildren<TMP_Text>().text = "OK";
                 break;
         }
     }
