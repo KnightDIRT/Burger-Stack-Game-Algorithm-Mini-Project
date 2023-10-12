@@ -68,11 +68,24 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        currentState = state.ShowingInput;
-        NextState();
-        currentlerpTime = 0;
-        totalScore = 0;
         currentLevel = 1;
+        currentlerpTime = 0;
+
+        BurgerManagerInstance.burgerPartPrefabs.Clear();
+        int typeCount = 2 + (currentLevel < 4 ? currentLevel : Mathf.FloorToInt((currentLevel - 3) / 2.4f) + 3); //difficulty curve in green https://www.desmos.com/calculator/yxpydnaqui
+        typeCount = Mathf.Min(typeCount, BurgerManagerInstance.burgerPartPrefabsAll.Count);
+        for (int i = 0; i < typeCount; i++)
+        {
+            BurgerManagerInstance.burgerPartPrefabs.Add(BurgerManagerInstance.burgerPartPrefabsAll[i]);
+        }
+
+        partCount = (int)(1.5f * Mathf.Sqrt(currentLevel)) + (currentLevel > 50 ? (currentLevel - 50) * (currentLevel - 50) : 0); //difficulty curve in blue https://www.desmos.com/calculator/yxpydnaqui
+        orderBurger.CreateRandomBurger(partCount);
+        orderBurger.RegenerateBurger();
+        cameraControlBurger.targetBurger = orderBurger;
+
+        orderBurger.gameObject.SetActive(true);
+        inputBurger.gameObject.SetActive(false);
     }
 
     private void LateUpdate()
@@ -138,13 +151,13 @@ public class GameManager : MonoBehaviour
         {  
             if (scoreOut == maxScore * inOrderMultiplier)
             {
-                Text_Add.color = Color.yellow;
+                Text_Add.color = new Color(1, 0, 1);
 
                 audioSource.PlayOneShot(perfectScoreSound);
             }
             else
             {
-                Text_Add.color = Color.Lerp(Color.red, Color.green, scoreOut / maxScore);
+                Text_Add.color = Color.Lerp(Color.red, Color.yellow, scoreOut / maxScore);
 
                 if (scoreOut == maxScore) audioSource.PlayOneShot(maxScoreSound);
                 else if (scoreOut < maxScore / 4f) audioSource.PlayOneShot(minScoreSound);
