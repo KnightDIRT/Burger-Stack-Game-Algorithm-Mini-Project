@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public float inOrderMultiplier { get; private set; }
     private float inOrderMultiplier_p = 2f;
 
+    [Header("Links")]
     [SerializeField] CameraControlBurger cameraControlBurger;
     [SerializeField] Burger orderBurger;
     [SerializeField] Burger inputBurger;
@@ -21,6 +22,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text Text_Display;
     [SerializeField] TMP_Text Text_Add;
 
+    [Header("Sounds")]
+    [HideInInspector] public AudioSource audioSource;
+    public AudioClip clickSound;
+    public AudioClip deleteSound;
+
+    [Header("Debug Display")]
     public float totalScore;
     public int currentLevel;
 
@@ -47,6 +54,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        audioSource = GetComponent<AudioSource>();
 
         maxScore = maxScore_p;
         inOrderMultiplier = inOrderMultiplier_p;
@@ -64,6 +72,8 @@ public class GameManager : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (Input.GetMouseButtonDown(0)) audioSource.PlayOneShot(clickSound);
+
         currentlerpTime -= Time.deltaTime;
 
         displayScore = Mathf.Lerp(displayScore, totalScore, 1 - currentlerpTime / lerpTime);

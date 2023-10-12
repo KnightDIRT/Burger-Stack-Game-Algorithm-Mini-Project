@@ -15,6 +15,7 @@ public class BurgerPartCollider : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
+            GameManager.Instance.audioSource.PlayOneShot(GameManager.Instance.deleteSound);
             BurgerManagerInstance.HighlightBurgerPart(burger.burgerParts[index], 0);
             burger.burgerParts.RemoveAt(index);
             burger.RegenerateBurger();
