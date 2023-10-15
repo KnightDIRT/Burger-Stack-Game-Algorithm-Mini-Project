@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Start scene Placeholder.unity
+    guid: a191cf74e89b38a42b93edeb6ec13c37
+  - enabled: 1
     path: Assets/Scenes/Knight.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/End scene Placeholder.unity
+    guid: 46b9c6af1d5590b48a92cc59cee0d726
   m_configObjects: {}
