@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static BurgerManager;
 
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     private float maxScore_p = 1000f;
     public float inOrderMultiplier { get; private set; }
     private float inOrderMultiplier_p = 2f;
+    private float failPercentage = 0.25f;
 
     [Header("Links")]
     [SerializeField] CameraControlBurger cameraControlBurger;
@@ -39,7 +41,8 @@ public class GameManager : MonoBehaviour
 
     private float lerpTime = 1f;
     private float currentlerpTime;
-    private float displayScore;
+    private float displayScore = 0;
+    private float displayPercentage = 0;
 
     enum state
     {
@@ -95,7 +98,8 @@ public class GameManager : MonoBehaviour
         if (currentlerpTime > 0) currentlerpTime -= Time.deltaTime;
 
         displayScore = Mathf.Lerp(displayScore, totalScore, 1 - currentlerpTime / lerpTime);
-        Text_Display.text = string.Format("SCORE: {0:F0}\nLEVEL: {1}", displayScore, currentLevel);
+        displayPercentage = Mathf.Lerp(displayPercentage, 100f * totalScore / (maxScore * (currentLevel - 1 > 0 ? currentLevel - 1 : 1)), 1 - currentlerpTime / lerpTime);
+        Text_Display.text = string.Format("SCORE: {0:F0} ({1:F2}%)\nLEVEL: {2}", displayScore, displayPercentage, currentLevel);
 
         Color color = Text_Add.color;
         color.a = currentlerpTime / lerpTime;
@@ -120,12 +124,14 @@ public class GameManager : MonoBehaviour
                 break;
             case state.ShowingInput:
                 currentState = state.ShowingOrder;
-                currentLevel++;
                 currentlerpTime = lerpTime;
 
                 var compareOutput = BurgerManagerInstance.CompareBurger(orderBurger, inputBurger);
                 totalScore += compareOutput[0];
+                CheckFail();
                 UpdateAddTextandSound(compareOutput[0]);
+
+                currentLevel++;
 
                 BurgerManagerInstance.burgerPartPrefabs.Clear();
                 int typeCount = 2 + (currentLevel < 4 ? currentLevel : Mathf.FloorToInt((currentLevel - 3) / 2.4f) + 3); //difficulty curve in green https://www.desmos.com/calculator/yxpydnaqui
@@ -160,10 +166,16 @@ public class GameManager : MonoBehaviour
                 Text_Add.color = Color.Lerp(Color.red, Color.yellow, scoreOut / maxScore);
 
                 if (scoreOut == maxScore) audioSource.PlayOneShot(maxScoreSound);
-                else if (scoreOut < maxScore / 4f) audioSource.PlayOneShot(minScoreSound);
+                else if (scoreOut < maxScore * failPercentage) audioSource.PlayOneShot(minScoreSound);
                 else audioSource.PlayOneShot(scoreSound);
             }
             Text_Add.text = "+" + scoreOut.ToString();
+        }
+
+        void CheckFail()
+        {
+            float failScore = maxScore * currentLevel * failPercentage;
+            if (totalScore < failScore) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }
