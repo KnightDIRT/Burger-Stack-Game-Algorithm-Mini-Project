@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
         void CheckFail()
         {
             float failScore = maxScore * currentLevel * failPercentage;
-            if (totalScore < failScore) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            if (totalScore < failScore) SceneManager.LoadScene(2);
         }
     }
 }
