@@ -21,4 +21,9 @@ public class StartSceneManager : MonoBehaviour
         Application.Quit();
         #endif
     }
+
+    public void EnterSettings()
+    {
+        SceneManager.LoadScene(3);
+    }
 }
