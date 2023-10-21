@@ -1,3 +1,7 @@
-# Burger Stack Game Algorithm Mini Project
+## Burger Stack Game Algorithm Mini Project
 
-You can try running this project and edit it in Unity as an Unity 3D URP version 2022.3.0f1
+# How to Run?
+You can try running this project and edit it as an Unity 3D URP project in Unity version 2022.3.0f1
+
+# How to View Code?
+All codes utilized are stored in Assets/Scripts/
